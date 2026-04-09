@@ -24,6 +24,15 @@
             "command": "bash .claude/hooks/lint.sh"
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/memory-check.py"
+          }
+        ]
       }
     ],
     "SessionStart": [
