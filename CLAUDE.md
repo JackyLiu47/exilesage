@@ -59,9 +59,11 @@ data/
 - [ ] Freshness tracking (patch version detection)
 - [ ] Innovative build synthesis
 
-## Subagent instructions
+## Agent team
 
-See @.claude/rules/agents.md
+5-agent team per session: pipeline-agent (Haiku), tools-agent (Sonnet), advisor-agent (Opus),
+tech-lead (Sonnet), devil-advocate (Opus). After each step: tech-lead reviews → devil-advocate
+challenges → orchestrator synthesizes. See @.claude/rules/agents.md
 
 ## Data layer conventions
 
