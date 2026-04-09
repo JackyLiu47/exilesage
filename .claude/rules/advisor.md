@@ -8,7 +8,7 @@ Router model (Haiku) classifies query into QueryType enum, then core.py selects 
 
 ## Agentic loop rules
 
-- Max tool call iterations: MAX_TOOL_ITER = 5 (safety cap, in config.py)
+- Max tool call iterations: MAX_TOOL_ITER = 8 (safety cap, in config.py)
 - tool_choice="auto" — let the model decide when to stop calling tools
 - Always append tool_result blocks before next API call (Anthropic SDK requirement)
 - On iteration cap hit: return partial answer with note that more data may exist

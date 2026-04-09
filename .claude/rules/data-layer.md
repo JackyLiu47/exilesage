@@ -12,12 +12,11 @@ All tool functions MUST:
 - Accept typed args: query: str = "", plus domain-specific filters
 - Return List[dict] — never raw sqlite3.Row objects
 - Hard cap results at MAX_RESULTS (default 20) from exilesage/config.py
-- Include a `_score` key when returning FTS5 ranked results
 - Never raise exceptions to caller — catch and return [] with logged warning
 
 ## Importer rules
 
-- Pydantic models in exilesage/models.py are the schema contract — importers validate against them
+- Pydantic models in pipeline/importers/*.py are the schema contract — each importer defines its own row model
 - Validation failure = log warning + skip row, never crash the import
 - Always update meta table with import timestamp and row counts after each importer runs
 - FTS5 content tables must be rebuilt after bulk insert (INSERT INTO {table}_fts SELECT ...)

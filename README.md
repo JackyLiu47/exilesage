@@ -32,7 +32,7 @@ classify_query()        — Haiku classifies: factual | crafting | analysis | gu
         ↓
 MODEL_MAP               — selects cheapest model that fits (Haiku → Sonnet → Opus)
         ↓
-agentic loop            — Claude calls tools as needed, up to 5 iterations
+agentic loop            — Claude calls tools as needed, up to 8 iterations
     ↓ search_mods()         — FTS5 + stat_id search over 14,840 mods
     ↓ search_base_items()   — FTS5 search over 2,902 item bases
     ↓ search_currencies()   — FTS5 search over 780 currencies
@@ -139,7 +139,6 @@ exilesage ingest    # re-ingest existing processed files only
 exilesage/
 ├── config.py           MODEL_MAP, QueryType, DB_PATH, constants
 ├── db.py               SQLite connection (WAL mode, FTS5)
-├── models.py           Pydantic models — shared validation contract
 ├── tools/
 │   ├── mods.py         search_mods(query, domain, generation_type, tag, stat_id)
 │   ├── items.py        search_base_items(query, item_class, domain, level_range)

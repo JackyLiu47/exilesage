@@ -16,7 +16,6 @@ User query → [Haiku router] → [Haiku/Sonnet/Opus advisor] → tool calls →
 
 ```
 exilesage/          main package
-  models.py         Pydantic models — single source of truth, shared by all layers
   db.py             SQLite connection + schema creation
   config.py         MODEL_MAP, QueryType, constants
   tools/            search_mods, search_base_items, search_currencies, search_augments
@@ -39,7 +38,7 @@ data/
 - **LLM-first**: PoE2 synergies are implicit — Claude reasons, doesn't look up a graph
 - **Model routing**: query complexity determines model; see `exilesage/config.py`
 - **FTS5 over embeddings**: avoids embedding pipeline until S2+ when community guides added
-- **Pydantic as single source**: models.py used by importers, tools, and API layer
+- **Pydantic validation at import**: each importer defines its own row model; validation failure = skip row, never crash
 
 ## Stage tracker
 
