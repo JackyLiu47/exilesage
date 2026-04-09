@@ -1,0 +1,51 @@
+{
+  "model": "claude-opus-4-6",
+  "permissions": {
+    "allow": ["Read", "Write", "Edit", "Bash", "Glob", "Grep"]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/safe-bash.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/lint.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Context compacted. IMPORTANT: Re-read CLAUDE.md before continuing. Check stage tracker. Session model: Opus. Never query JSON files directly — use SQLite tools only.'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/check-stop.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

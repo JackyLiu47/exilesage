@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ':*)",
+      "Bash(python -c ':*)",
+      "Bash(python -m pipeline.ingest)",
+      "Bash(pip install:*)",
+      "Bash(exilesage --help)",
+      "Bash(ls -la G:/cc_projects/poe2craf/.env*)",
+      "Bash(python -m pytest tests/test_db.py --co -q)",
+      "Bash(python -m pytest tests/test_db.py -v --tb=short)",
+      "Bash(python -m pytest tests/test_db.py tests/test_tools.py -v --tb=short)",
+      "Bash(gh auth:*)",
+      "Bash(python -m pytest tests/test_db.py tests/test_tools.py -q)"
+    ]
+  }
+}

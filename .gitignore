@@ -1,0 +1,35 @@
+# Environment
+.env
+
+# Database
+data/exilesage.db
+data/exilesage.db-shm
+data/exilesage.db-wal
+
+# Raw game data (too large, sourced externally)
+data/raw/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,6279 @@
+{
+  "Metadata/Items/SoulCores/AmanamusGaze": {
+    "id": "Metadata/Items/SoulCores/AmanamusGaze",
+    "type_id": "AbyssalEye",
+    "type_name": "[AbyssalEye|Abyssal Eye]",
+    "required_level": 60,
+    "limit": "1 [Ancient|Ancient Augment]",
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "+2 to [Armour] per 1 [Spirit]"
+        ],
+        "stats": [
+          {
+            "id": "armour_+_per_1_spirit",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Boots": {
+        "stat_text": [
+          "1% increased Movement Speed per 15 [Spirit], up to a maximum of 40%\nOther Modifiers to Movement Speed except for Sprinting do not apply"
+        ],
+        "stats": [
+          {
+            "id": "abyss_socketable_movement_speed_is_only_base_+%_per_15_spirit_up_to_+40%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Helmet": {
+        "stat_text": [
+          "Remove a [DamagingAilments|Damaging Ailment] when you use a [Command] Skill"
+        ],
+        "stats": [
+          {
+            "id": "remove_damaging_ailment_on_using_command_skill",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/KurgalsGaze": {
+    "id": "Metadata/Items/SoulCores/KurgalsGaze",
+    "type_id": "AbyssalEye",
+    "type_name": "[AbyssalEye|Abyssal Eye]",
+    "required_level": 60,
+    "limit": "1 [Ancient|Ancient Augment]",
+    "categories": {
+      "Boots": {
+        "stat_text": [
+          "15% increased Mana Cost [Efficiency] if you haven't Dodge Rolled [Recently]"
+        ],
+        "stats": [
+          {
+            "id": "mana_cost_efficiency_+%_if_not_dodge_rolled_recently",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Gloves": {
+        "stat_text": [
+          "40% increased [BuffEffect|effect] of [ArcaneSurge|Arcane Surge] on you"
+        ],
+        "stats": [
+          {
+            "id": "arcane_surge_effect_on_self_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Helmet": {
+        "stat_text": [
+          "Increases and Reductions to Life Regeneration Rate also apply to Mana Regeneration Rate"
+        ],
+        "stats": [
+          {
+            "id": "additive_modifiers_to_life_regeneration_also_apply_to_mana_regeneration_rate",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneAccuracy": {
+    "id": "Metadata/Items/SoulCores/RuneAccuracy",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "10% increased Life and Mana Recovery from [Flask|Flasks]"
+        ],
+        "stats": [
+          {
+            "id": "flask_life_and_mana_to_recover_+%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "25% increased [CriticalDamageBonus|Critical Damage Bonus]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_critical_strike_multiplier_+",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "20% increased [Critical|Critical Hit Chance] for [Spell|Spells]"
+        ],
+        "stats": [
+          {
+            "id": "spell_critical_strike_chance_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "[Attack|Attacks] have +1% to [Critical|Critical Hit Chance]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_additional_critical_strike_chance_permyriad",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+80 to [Accuracy|Accuracy] Rating"
+        ],
+        "stats": [
+          {
+            "id": "local_accuracy_rating",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneAccuracyGreater": {
+    "id": "Metadata/Items/SoulCores/RuneAccuracyGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "12% increased Life and Mana Recovery from [Flask|Flasks]"
+        ],
+        "stats": [
+          {
+            "id": "flask_life_and_mana_to_recover_+%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "25% increased [CriticalDamageBonus|Critical Damage Bonus]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_critical_strike_multiplier_+",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "24% increased [Critical|Critical Hit Chance] for [Spell|Spells]"
+        ],
+        "stats": [
+          {
+            "id": "spell_critical_strike_chance_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "[Attack|Attacks] have +1% to [Critical|Critical Hit Chance]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_additional_critical_strike_chance_permyriad",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+110 to [Accuracy|Accuracy] Rating"
+        ],
+        "stats": [
+          {
+            "id": "local_accuracy_rating",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneAccuracyLesser": {
+    "id": "Metadata/Items/SoulCores/RuneAccuracyLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "8% increased Life and Mana Recovery from [Flask|Flasks]"
+        ],
+        "stats": [
+          {
+            "id": "flask_life_and_mana_to_recover_+%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "25% increased [CriticalDamageBonus|Critical Damage Bonus]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_critical_strike_multiplier_+",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "16% increased [Critical|Critical Hit Chance] for [Spell|Spells]"
+        ],
+        "stats": [
+          {
+            "id": "spell_critical_strike_chance_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "[Attack|Attacks] have +1% to [Critical|Critical Hit Chance]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_additional_critical_strike_chance_permyriad",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+50 to [Accuracy|Accuracy] Rating"
+        ],
+        "stats": [
+          {
+            "id": "local_accuracy_rating",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneCold": {
+    "id": "Metadata/Items/SoulCores/RuneCold",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+12% to [Resistances|Cold Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_cold_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Freeze|Freeze] Buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_freeze_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 8% of Damage as Extra [Cold] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_cold",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Freeze|Freeze] Buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_freeze_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 6 to 10 [Cold|Cold] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_cold_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_cold_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneColdGreater": {
+    "id": "Metadata/Items/SoulCores/RuneColdGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+14% to [Resistances|Cold Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_cold_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Freeze|Freeze] Buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_freeze_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 10% of Damage as Extra [Cold] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_cold",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Freeze|Freeze] Buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_freeze_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 9 to 15 [Cold|Cold] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_cold_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_cold_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneColdLesser": {
+    "id": "Metadata/Items/SoulCores/RuneColdLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+10% to [Resistances|Cold Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_cold_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Freeze|Freeze] Buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_freeze_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 6% of Damage as Extra [Cold] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_cold",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Freeze|Freeze] Buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_freeze_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 3 to 5 [Cold|Cold] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_cold_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_cold_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneDexterity": {
+    "id": "Metadata/Items/SoulCores/RuneDexterity",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+8 to [Dexterity|Dexterity]"
+        ],
+        "stats": [
+          {
+            "id": "additional_dexterity",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+80 to [Evasion] Rating"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_evasion_rating",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 1 to 16 [Lightning] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_lightning_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_lightning_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneDexterityGreater": {
+    "id": "Metadata/Items/SoulCores/RuneDexterityGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+10 to [Dexterity|Dexterity]"
+        ],
+        "stats": [
+          {
+            "id": "additional_dexterity",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+80 to [Evasion] Rating"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_evasion_rating",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 1 to 16 [Lightning] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_lightning_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_lightning_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneDexterityLesser": {
+    "id": "Metadata/Items/SoulCores/RuneDexterityLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+6 to [Dexterity|Dexterity]"
+        ],
+        "stats": [
+          {
+            "id": "additional_dexterity",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+80 to [Evasion] Rating"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_evasion_rating",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 1 to 16 [Lightning] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_lightning_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_lightning_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneEnhance": {
+    "id": "Metadata/Items/SoulCores/RuneEnhance",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "16% increased [Armour|Armour], [Evasion|Evasion] and [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "local_armour_and_evasion_and_energy_shield_+%",
+            "local": true
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "[ArmourBreak|Break] [Armour] on [Critical|Critical Hit] with [Spell|Spells] equal to 12% of [Physical|Physical] Damage dealt"
+        ],
+        "bonded_stats": [
+          {
+            "id": "armour_break_equal_to_%_physical_damage_dealt_on_critical_strike_with_spells",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "25% increased [Spell] Damage"
+        ],
+        "stats": [
+          {
+            "id": "spell_damage_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "20% increased effect of [ArmourBreak|Fully Broken Armour]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "broken_armour_and_sundered_armour_debuff_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "16% increased [Physical] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_physical_damage_+%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneEnhanceGreater": {
+    "id": "Metadata/Items/SoulCores/RuneEnhanceGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "18% increased [Armour|Armour], [Evasion|Evasion] and [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "local_armour_and_evasion_and_energy_shield_+%",
+            "local": true
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "[ArmourBreak|Break] [Armour] on [Critical|Critical Hit] with [Spell|Spells] equal to 12% of [Physical|Physical] Damage dealt"
+        ],
+        "bonded_stats": [
+          {
+            "id": "armour_break_equal_to_%_physical_damage_dealt_on_critical_strike_with_spells",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "30% increased [Spell] Damage"
+        ],
+        "stats": [
+          {
+            "id": "spell_damage_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "20% increased effect of [ArmourBreak|Fully Broken Armour]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "broken_armour_and_sundered_armour_debuff_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "18% increased [Physical] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_physical_damage_+%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneEnhanceLesser": {
+    "id": "Metadata/Items/SoulCores/RuneEnhanceLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "14% increased [Armour|Armour], [Evasion|Evasion] and [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "local_armour_and_evasion_and_energy_shield_+%",
+            "local": true
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "[ArmourBreak|Break] [Armour] on [Critical|Critical Hit] with [Spell|Spells] equal to 12% of [Physical|Physical] Damage dealt"
+        ],
+        "bonded_stats": [
+          {
+            "id": "armour_break_equal_to_%_physical_damage_dealt_on_critical_strike_with_spells",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "20% increased [Spell] Damage"
+        ],
+        "stats": [
+          {
+            "id": "spell_damage_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "20% increased effect of [ArmourBreak|Fully Broken Armour]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "broken_armour_and_sundered_armour_debuff_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "14% increased [Physical] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_physical_damage_+%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneFire": {
+    "id": "Metadata/Items/SoulCores/RuneFire",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+12% to [Resistances|Fire Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_fire_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "25% increased [Ignite|Ignite] [BuffMagnitude|Magnitude]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_ignite_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 8% of Damage as Extra [Fire] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_fire",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "25% increased [Ignite|Ignite] [BuffMagnitude|Magnitude]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_ignite_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 7 to 11 [Fire|Fire] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_fire_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_fire_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneFireGreater": {
+    "id": "Metadata/Items/SoulCores/RuneFireGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+14% to [Resistances|Fire Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_fire_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "25% increased [Ignite|Ignite] [BuffMagnitude|Magnitude]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_ignite_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 10% of Damage as Extra [Fire] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_fire",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "25% increased [Ignite|Ignite] [BuffMagnitude|Magnitude]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_ignite_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 13 to 16 [Fire|Fire] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_fire_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_fire_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneFireLesser": {
+    "id": "Metadata/Items/SoulCores/RuneFireLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+10% to [Resistances|Fire Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_fire_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "25% increased [Ignite|Ignite] [BuffMagnitude|Magnitude]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_ignite_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 6% of Damage as Extra [Fire] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_fire",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "25% increased [Ignite|Ignite] [BuffMagnitude|Magnitude]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_ignite_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 4 to 6 [Fire|Fire] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_fire_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_fire_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneIntelligence": {
+    "id": "Metadata/Items/SoulCores/RuneIntelligence",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+8 to [Intelligence|Intelligence]"
+        ],
+        "stats": [
+          {
+            "id": "additional_intelligence",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+50 to maximum [EnergyShield|Energy Shield]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 5 to 8 [Cold] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_cold_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_cold_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneIntelligenceGreater": {
+    "id": "Metadata/Items/SoulCores/RuneIntelligenceGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+10 to [Intelligence|Intelligence]"
+        ],
+        "stats": [
+          {
+            "id": "additional_intelligence",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+50 to maximum [EnergyShield|Energy Shield]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 5 to 8 [Cold] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_cold_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_cold_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneIntelligenceLesser": {
+    "id": "Metadata/Items/SoulCores/RuneIntelligenceLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+6 to [Intelligence|Intelligence]"
+        ],
+        "stats": [
+          {
+            "id": "additional_intelligence",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+50 to maximum [EnergyShield|Energy Shield]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 5 to 8 [Cold] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_cold_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_cold_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLife": {
+    "id": "Metadata/Items/SoulCores/RuneLife",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+30 to maximum Life"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_life_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+30 to maximum [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_life_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[LifeLeech|Leeches] 2.5% of [Physical|Physical] Damage as Life"
+        ],
+        "stats": [
+          {
+            "id": "local_life_leech_from_physical_damage_permyriad",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLifeGreater": {
+    "id": "Metadata/Items/SoulCores/RuneLifeGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+40 to maximum Life"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_life_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+35 to maximum [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_life_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[LifeLeech|Leeches] 3% of [Physical|Physical] Damage as Life"
+        ],
+        "stats": [
+          {
+            "id": "local_life_leech_from_physical_damage_permyriad",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLifeLesser": {
+    "id": "Metadata/Items/SoulCores/RuneLifeLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+20 to maximum Life"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_life_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+25 to maximum [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_life_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[LifeLeech|Leeches] 2% of [Physical|Physical] Damage as Life"
+        ],
+        "stats": [
+          {
+            "id": "local_life_leech_from_physical_damage_permyriad",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLifeRecovery": {
+    "id": "Metadata/Items/SoulCores/RuneLifeRecovery",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Regenerate 0.3% of maximum Life per second"
+        ],
+        "stats": [
+          {
+            "id": "life_regeneration_rate_per_minute_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "8% of Damage taken [Recoup|Recouped] as Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "damage_taken_goes_to_life_over_4_seconds_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "15% increased [ESRechargeRate|Energy Shield Recharge Rate]"
+        ],
+        "stats": [
+          {
+            "id": "energy_shield_recharge_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Regenerate 0.4% of maximum Life per second"
+        ],
+        "bonded_stats": [
+          {
+            "id": "life_regeneration_rate_per_minute_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain 20 Life per enemy killed"
+        ],
+        "stats": [
+          {
+            "id": "base_life_gained_on_enemy_death",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLifeRecoveryGreater": {
+    "id": "Metadata/Items/SoulCores/RuneLifeRecoveryGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Regenerate 0.35% of maximum Life per second"
+        ],
+        "stats": [
+          {
+            "id": "life_regeneration_rate_per_minute_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "8% of Damage taken [Recoup|Recouped] as Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "damage_taken_goes_to_life_over_4_seconds_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "18% increased [ESRechargeRate|Energy Shield Recharge Rate]"
+        ],
+        "stats": [
+          {
+            "id": "energy_shield_recharge_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Regenerate 0.4% of maximum Life per second"
+        ],
+        "bonded_stats": [
+          {
+            "id": "life_regeneration_rate_per_minute_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain 30 Life per enemy killed"
+        ],
+        "stats": [
+          {
+            "id": "base_life_gained_on_enemy_death",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLifeRecoveryLesser": {
+    "id": "Metadata/Items/SoulCores/RuneLifeRecoveryLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Regenerate 0.25% of maximum Life per second"
+        ],
+        "stats": [
+          {
+            "id": "life_regeneration_rate_per_minute_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "8% of Damage taken [Recoup|Recouped] as Life"
+        ],
+        "bonded_stats": [
+          {
+            "id": "damage_taken_goes_to_life_over_4_seconds_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "12% increased [ESRechargeRate|Energy Shield Recharge Rate]"
+        ],
+        "stats": [
+          {
+            "id": "energy_shield_recharge_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Regenerate 0.4% of maximum Life per second"
+        ],
+        "bonded_stats": [
+          {
+            "id": "life_regeneration_rate_per_minute_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain 10 Life per enemy killed"
+        ],
+        "stats": [
+          {
+            "id": "base_life_gained_on_enemy_death",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLightning": {
+    "id": "Metadata/Items/SoulCores/RuneLightning",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+12% to [Resistances|Lightning Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_lightning_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [BuffMagnitude|Magnitude] of [Shock|Shock] you inflict"
+        ],
+        "bonded_stats": [
+          {
+            "id": "shock_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 8% of Damage as Extra [Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_lightning",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "30% increased [BuffMagnitude|Magnitude] of [Shock|Shock] you inflict"
+        ],
+        "bonded_stats": [
+          {
+            "id": "shock_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 1 to 20 [Lightning|Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_lightning_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_lightning_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLightningGreater": {
+    "id": "Metadata/Items/SoulCores/RuneLightningGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+14% to [Resistances|Lightning Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_lightning_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [BuffMagnitude|Magnitude] of [Shock|Shock] you inflict"
+        ],
+        "bonded_stats": [
+          {
+            "id": "shock_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 10% of Damage as Extra [Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_lightning",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "30% increased [BuffMagnitude|Magnitude] of [Shock|Shock] you inflict"
+        ],
+        "bonded_stats": [
+          {
+            "id": "shock_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 1 to 30 [Lightning|Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_lightning_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_lightning_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneLightningLesser": {
+    "id": "Metadata/Items/SoulCores/RuneLightningLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+10% to [Resistances|Lightning Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_lightning_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [BuffMagnitude|Magnitude] of [Shock|Shock] you inflict"
+        ],
+        "bonded_stats": [
+          {
+            "id": "shock_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 6% of Damage as Extra [Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_lightning",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "30% increased [BuffMagnitude|Magnitude] of [Shock|Shock] you inflict"
+        ],
+        "bonded_stats": [
+          {
+            "id": "shock_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 1 to 10 [Lightning|Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_lightning_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_lightning_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneMana": {
+    "id": "Metadata/Items/SoulCores/RuneMana",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+25 to maximum Mana"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_mana_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+40 to maximum Mana"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_mana_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[ManaLeech|Leeches] 2% of [Physical|Physical] Damage as Mana"
+        ],
+        "stats": [
+          {
+            "id": "local_mana_leech_from_physical_damage_permyriad",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneManaGreater": {
+    "id": "Metadata/Items/SoulCores/RuneManaGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+35 to maximum Mana"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_mana_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+50 to maximum Mana"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_mana_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[ManaLeech|Leeches] 2.5% of [Physical|Physical] Damage as Mana"
+        ],
+        "stats": [
+          {
+            "id": "local_mana_leech_from_physical_damage_permyriad",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneManaLesser": {
+    "id": "Metadata/Items/SoulCores/RuneManaLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+15 to maximum Mana"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_mana_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+30 to maximum Mana"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "5% increased maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_mana_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[ManaLeech|Leeches] 1.5% of [Physical|Physical] Damage as Mana"
+        ],
+        "stats": [
+          {
+            "id": "local_mana_leech_from_physical_damage_permyriad",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneManaRecovery": {
+    "id": "Metadata/Items/SoulCores/RuneManaRecovery",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "15% increased Mana Regeneration Rate"
+        ],
+        "stats": [
+          {
+            "id": "mana_regeneration_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "16% increased Mana Cost [Efficiency]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_mana_cost_efficiency_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "20% increased Mana Regeneration Rate"
+        ],
+        "stats": [
+          {
+            "id": "mana_regeneration_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "12% of Skill Mana Costs [StatConversion|Converted] to Life Costs"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_skill_cost_life_instead_of_mana_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain 16 Mana per enemy killed"
+        ],
+        "stats": [
+          {
+            "id": "base_mana_gained_on_enemy_death",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneManaRecoveryGreater": {
+    "id": "Metadata/Items/SoulCores/RuneManaRecoveryGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "18% increased Mana Regeneration Rate"
+        ],
+        "stats": [
+          {
+            "id": "mana_regeneration_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "16% increased Mana Cost [Efficiency]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_mana_cost_efficiency_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "24% increased Mana Regeneration Rate"
+        ],
+        "stats": [
+          {
+            "id": "mana_regeneration_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "12% of Skill Mana Costs [StatConversion|Converted] to Life Costs"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_skill_cost_life_instead_of_mana_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain 24 Mana per enemy killed"
+        ],
+        "stats": [
+          {
+            "id": "base_mana_gained_on_enemy_death",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneManaRecoveryLesser": {
+    "id": "Metadata/Items/SoulCores/RuneManaRecoveryLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "12% increased Mana Regeneration Rate"
+        ],
+        "stats": [
+          {
+            "id": "mana_regeneration_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "16% increased Mana Cost [Efficiency]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_mana_cost_efficiency_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "16% increased Mana Regeneration Rate"
+        ],
+        "stats": [
+          {
+            "id": "mana_regeneration_rate_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "12% of Skill Mana Costs [StatConversion|Converted] to Life Costs"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_skill_cost_life_instead_of_mana_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain 8 Mana per enemy killed"
+        ],
+        "stats": [
+          {
+            "id": "base_mana_gained_on_enemy_death",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RunePhysical": {
+    "id": "Metadata/Items/SoulCores/RunePhysical",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "stat_text": [
+          "14 to 21 [Physical|Physical] [Thorns|Thorns] damage"
+        ],
+        "stats": [
+          {
+            "id": "thorns_minimum_base_physical_damage",
+            "local": false
+          },
+          {
+            "id": "thorns_maximum_base_physical_damage",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "Adds 6 to 9 [Physical|Physical] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_physical_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_physical_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RunePhysicalGreater": {
+    "id": "Metadata/Items/SoulCores/RunePhysicalGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "stat_text": [
+          "31 to 52 [Physical|Physical] [Thorns|Thorns] damage"
+        ],
+        "stats": [
+          {
+            "id": "thorns_minimum_base_physical_damage",
+            "local": false
+          },
+          {
+            "id": "thorns_maximum_base_physical_damage",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "Adds 9 to 12 [Physical|Physical] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_physical_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_physical_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RunePhysicalLesser": {
+    "id": "Metadata/Items/SoulCores/RunePhysicalLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "stat_text": [
+          "6 to 9 [Physical|Physical] [Thorns|Thorns] damage"
+        ],
+        "stats": [
+          {
+            "id": "thorns_minimum_base_physical_damage",
+            "local": false
+          },
+          {
+            "id": "thorns_maximum_base_physical_damage",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "Adds 3 to 4 [Physical|Physical] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_physical_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_physical_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial1": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial1",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "[Minion|Minions] have +10% to all Elemental [Resistances]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "minion_elemental_resistance_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Minions take 10% of [Physical|Physical] Damage as [Lightning|Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "minion_physical_hit_and_dot_damage_%_taken_as_lightning",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "[Minion|Minions] deal 20% increased Damage"
+        ],
+        "bonded_stats": [
+          {
+            "id": "minion_damage_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Minion|Minions] gain 10% of their [Physical] Damage as Extra [Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "minion_physical_damage_%_to_gain_as_lightning",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial10": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial10",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Body Armour": {
+        "bonded_stat_text": [
+          "8% increased [Curse] [BuffMagnitude|Magnitudes]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "curse_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "50% reduced [BuffEffect|effect] of [Curse|Curses] on you"
+        ],
+        "stats": [
+          {
+            "id": "curse_effect_on_self_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial11": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial11",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "bonded_stat_text": [
+          "+10% to all [ElementalDamage|Elemental] [Resistances]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_resist_all_elements_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "2% increased Experience gain"
+        ],
+        "stats": [
+          {
+            "id": "experience_gain_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial12": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial12",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "bonded_stat_text": [
+          "15% increased [BuffMagnitude|Magnitude] of [NonDamagingAilments|Non-Damaging Ailments] you inflict"
+        ],
+        "bonded_stats": [
+          {
+            "id": "non_damaging_ailment_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "25% increased [Exposure] Effect"
+        ],
+        "stats": [
+          {
+            "id": "exposure_effect_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial13": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial13",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "+1 to Level of all [Attack] Skills"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_skill_gem_level_+",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "50% increased [Attack] Damage against [Rarity|Rare or Unique] Enemies"
+        ],
+        "stats": [
+          {
+            "id": "attack_damage_+%_vs_rare_or_unique_enemy",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial14": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial14",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Body Armour": {
+        "bonded_stat_text": [
+          "20% [FasterESRechargeStart|faster start of Energy Shield Recharge]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "energy_shield_delay_-%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "50% increased [ESRechargeRate|Energy Shield Recharge Rate]"
+        ],
+        "stats": [
+          {
+            "id": "energy_shield_recharge_rate_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial15": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial15",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "15% increased Duration of [DamagingAilments|Damaging Ailments] on Enemies"
+        ],
+        "bonded_stats": [
+          {
+            "id": "damaging_ailment_duration_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "20% increased [BuffMagnitude|Magnitude] of [DamagingAilments|Damaging Ailments] you inflict"
+        ],
+        "stats": [
+          {
+            "id": "base_damaging_ailment_effect_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial16": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial16",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "15% increased Duration of Elemental [Ailments] on Enemies"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_elemental_status_ailment_duration_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "30% increased [BuffMagnitude|Magnitude] of [NonDamagingAilments|Non-Damaging Ailments] you inflict"
+        ],
+        "stats": [
+          {
+            "id": "non_damaging_ailment_effect_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial17": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial17",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "20% increased Mana Cost [Efficiency] while on [LowMana|Low Mana]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_mana_cost_efficiency_+%_while_on_low_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "8% increased Cast Speed"
+        ],
+        "stats": [
+          {
+            "id": "base_cast_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial18": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial18",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Bow": {
+        "bonded_stat_text": [
+          "20% increased [Projectile] Speed"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_projectile_speed_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Bow [Attack|Attacks] fire an additional Arrow"
+        ],
+        "stats": [
+          {
+            "id": "number_of_additional_arrows",
+            "local": false
+          }
+        ],
+        "target": [
+          "Bows"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial19": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial19",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "Every [Rage] also grants 1% increased [Spell] Damage"
+        ],
+        "bonded_stats": [
+          {
+            "id": "spell_damage_+%_per_rage",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "25% chance for [Spell] Skills to fire 2 additional [Projectile|Projectiles]"
+        ],
+        "stats": [
+          {
+            "id": "spell_skills_fire_2_additional_projectiles_final_chance_%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial2": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial2",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "15% increased [Thorns|Thorns] damage"
+        ],
+        "bonded_stats": [
+          {
+            "id": "thorns_damage_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "1 to 100 [Lightning|Lightning] [Thorns|Thorns] damage"
+        ],
+        "stats": [
+          {
+            "id": "thorns_minimum_base_lightning_damage",
+            "local": false
+          },
+          {
+            "id": "thorns_maximum_base_lightning_damage",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "[Invoke|Invocated] [Spell|Spells] have 25% chance to consume half as much [Energy]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "invocation_spell_chance_to_cost_half_energy_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Meta] Skills gain 10% increased [Energy]"
+        ],
+        "stats": [
+          {
+            "id": "energy_generated_+%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial20": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial20",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "+7% to [Resistances|Chaos Resistance]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_chaos_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "20% increased [Withered|Withered] [BuffMagnitude|Magnitude]"
+        ],
+        "stats": [
+          {
+            "id": "withered_magnitude_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial21": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial21",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "+2% to [MaximumResistances|Maximum Fire Resistance]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_fire_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 23 to 34 [Fire|Fire] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_fire_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_fire_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial22": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial22",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "+2% to [MaximumResistances|Maximum Cold Resistance]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_cold_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 19 to 28 [Cold|Cold] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_cold_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_cold_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial23": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial23",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "+2% to [MaximumResistances|Maximum Lightning Resistance]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_lightning_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 1 to 60 [Lightning|Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_lightning_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_lightning_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial24": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial24",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "Fissure Skills have +2 to [Limit]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "fissure_skills_limit_+",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Adds 5 to 12 [Physical|Physical] Damage to [Attack|Attacks]"
+        ],
+        "stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial25": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial25",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Body Armour": {
+        "bonded_stat_text": [
+          "8% of Maximum Life [StatConversion|Converted] to [EnergyShield|Energy Shield]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "maximum_life_%_to_convert_to_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "15% of Damage is taken from Mana before Life"
+        ],
+        "stats": [
+          {
+            "id": "base_damage_removed_from_mana_before_life_%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial3": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial3",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "15% increased [AilmentThreshold|Elemental Ailment Threshold]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "ailment_threshold_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Debuff|Debuffs] on you expire 8% faster"
+        ],
+        "stats": [
+          {
+            "id": "debuff_time_passed_+%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "15% increased [Reservation] [Efficiency] of [Herald] Skills"
+        ],
+        "bonded_stats": [
+          {
+            "id": "reservation_efficiency_+%_of_herald_skills",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "8% increased [SkillSpeed|Skill Speed]"
+        ],
+        "stats": [
+          {
+            "id": "skill_speed_+%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial4": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial4",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "10% reduced [Shock|Shock] duration on you"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_self_shock_duration_-%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "10% reduced [BuffEffect|effect] of [Shock|Shock] on you"
+        ],
+        "stats": [
+          {
+            "id": "shocked_effect_on_self_+%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "20% increased [Exposure] Effect"
+        ],
+        "bonded_stats": [
+          {
+            "id": "exposure_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Attack|Attacks] with this Weapon have 10% chance to inflict [Exposure]"
+        ],
+        "stats": [
+          {
+            "id": "local_inflict_exposure_on_hit_%_chance",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial5": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial5",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "[Archon] recovery period expires 30% faster"
+        ],
+        "bonded_stats": [
+          {
+            "id": "archon_delay_expires_x%_faster",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+1 to Level of all [Spell|Spell] Skills"
+        ],
+        "stats": [
+          {
+            "id": "spell_skill_gem_level_+",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial6": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial6",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "12% chance when collecting an [ElementalInfusion|Elemental Infusion] to gain an\nadditional [ElementalInfusion|Elemental Infusion] of the same type"
+        ],
+        "bonded_stats": [
+          {
+            "id": "additional_infusion_gain_chance_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 5% of Damage as Extra Damage of all [ElementalDamage|Elements]"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_cold_fire_lightning",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "8% chance to gain an additional random [Charges|Charge] when you gain a Charge"
+        ],
+        "bonded_stats": [
+          {
+            "id": "chance_to_gain_1_more_random_charge_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 5% of Damage as Extra Damage of all [ElementalDamage|Elements]"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_cold_fire_lightning",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial7": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial7",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "[Gain] 8% of Damage as Extra [Physical] Damage"
+        ],
+        "bonded_stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_physical",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 13% of Damage as Extra [Chaos] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_chaos",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "[Gain] 8% of Damage as Extra [Physical] Damage"
+        ],
+        "bonded_stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_physical",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Gain] 13% of Damage as Extra [Chaos] Damage"
+        ],
+        "stats": [
+          {
+            "id": "non_skill_base_all_damage_%_to_gain_as_chaos",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial8": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial8",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Boots": {
+        "bonded_stat_text": [
+          "Prevent +3% of Damage from [Deflect|Deflected] [HitDamage|Hits]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_damage_%_deflected",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "8% increased [Deflect|Deflection Rating] while moving"
+        ],
+        "stats": [
+          {
+            "id": "deflection_rating_+%_while_moving",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneSpecial9": {
+    "id": "Metadata/Items/SoulCores/RuneSpecial9",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Boots": {
+        "bonded_stat_text": [
+          "10% increased [CooldownRecovery|Cooldown Recovery Rate]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_cooldown_speed_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "5% increased Movement Speed"
+        ],
+        "stats": [
+          {
+            "id": "base_movement_velocity_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneStrength": {
+    "id": "Metadata/Items/SoulCores/RuneStrength",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+8 to [Strength|Strength]"
+        ],
+        "stats": [
+          {
+            "id": "additional_strength",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+100 to [Armour]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_physical_damage_reduction_rating",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 6 to 10 [Fire] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_fire_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_fire_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneStrengthGreater": {
+    "id": "Metadata/Items/SoulCores/RuneStrengthGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+10 to [Strength|Strength]"
+        ],
+        "stats": [
+          {
+            "id": "additional_strength",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+100 to [Armour]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_physical_damage_reduction_rating",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 6 to 10 [Fire] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_fire_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_fire_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneStrengthLesser": {
+    "id": "Metadata/Items/SoulCores/RuneStrengthLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "All": {
+        "stat_text": [
+          "+6 to [Strength|Strength]"
+        ],
+        "stats": [
+          {
+            "id": "additional_strength",
+            "local": false
+          }
+        ],
+        "target": "All Equipment"
+      },
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "+100 to [Armour]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_physical_damage_reduction_rating",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "Adds 6 to 10 [Physical|Physical] Damage to [Attack|Attacks]",
+          "Adds 6 to 10 [Fire] damage to [Attack|Attacks]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "attack_minimum_added_fire_damage",
+            "local": false
+          },
+          {
+            "id": "attack_maximum_added_fire_damage",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneStun": {
+    "id": "Metadata/Items/SoulCores/RuneStun",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 15,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+60 to [StunThreshold|Stun Threshold]"
+        ],
+        "stats": [
+          {
+            "id": "stun_threshold_+",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Immobilised|Immobilisation] buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_immobilisation_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain additional [StunThreshold|Stun Threshold] equal to 12% of maximum [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "stun_threshold_+_from_%_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "40% increased Damage against [Immobilised] Enemies"
+        ],
+        "bonded_stats": [
+          {
+            "id": "damage_+%_vs_immobilised_enemies",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Causes 25% increased [Stun|Stun] Buildup"
+        ],
+        "stats": [
+          {
+            "id": "local_hit_damage_stun_multiplier_+%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneStunGreater": {
+    "id": "Metadata/Items/SoulCores/RuneStunGreater",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": 30,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+80 to [StunThreshold|Stun Threshold]"
+        ],
+        "stats": [
+          {
+            "id": "stun_threshold_+",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Immobilised|Immobilisation] buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_immobilisation_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain additional [StunThreshold|Stun Threshold] equal to 14% of maximum [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "stun_threshold_+_from_%_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "40% increased Damage against [Immobilised] Enemies"
+        ],
+        "bonded_stats": [
+          {
+            "id": "damage_+%_vs_immobilised_enemies",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Causes 30% increased [Stun|Stun] Buildup"
+        ],
+        "stats": [
+          {
+            "id": "local_hit_damage_stun_multiplier_+%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/RuneStunLesser": {
+    "id": "Metadata/Items/SoulCores/RuneStunLesser",
+    "type_id": "Rune",
+    "type_name": "[Rune|Rune]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "bonded_stat_text": [
+          "+10 to maximum Life",
+          "+10 to maximum Mana"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_maximum_life",
+            "local": false
+          },
+          {
+            "id": "base_maximum_mana",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+40 to [StunThreshold|Stun Threshold]"
+        ],
+        "stats": [
+          {
+            "id": "stun_threshold_+",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Caster Weapons": {
+        "bonded_stat_text": [
+          "30% increased [Immobilised|Immobilisation] buildup"
+        ],
+        "bonded_stats": [
+          {
+            "id": "hit_damage_immobilisation_multiplier_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain additional [StunThreshold|Stun Threshold] equal to 10% of maximum [EnergyShield|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "stun_threshold_+_from_%_maximum_energy_shield",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "40% increased Damage against [Immobilised] Enemies"
+        ],
+        "bonded_stats": [
+          {
+            "id": "damage_+%_vs_immobilised_enemies",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Causes 20% increased [Stun|Stun] Buildup"
+        ],
+        "stats": [
+          {
+            "id": "local_hit_damage_stun_multiplier_+%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreBleed": {
+    "id": "Metadata/Items/SoulCores/SoulCoreBleed",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Helmet": {
+        "stat_text": [
+          "20% increased [Charm] Charges gained"
+        ],
+        "stats": [
+          {
+            "id": "charm_charges_gained_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "15% chance to cause [Bleeding|Bleeding] on [HitDamage|Hit]"
+        ],
+        "stats": [
+          {
+            "id": "local_chance_to_bleed_on_hit_%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreChaos": {
+    "id": "Metadata/Items/SoulCores/SoulCoreChaos",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "stat_text": [
+          "+11% to [Resistances|Chaos Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_chaos_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "15% chance to [Poison] on [HitDamage|Hit] with this weapon"
+        ],
+        "stats": [
+          {
+            "id": "local_poison_on_hit_%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreCrit": {
+    "id": "Metadata/Items/SoulCores/SoulCoreCrit",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "Hits against you have 20% reduced [CriticalDamageBonus|Critical Damage Bonus]"
+        ],
+        "stats": [
+          {
+            "id": "base_self_critical_strike_multiplier_-%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "+5% to [CriticalDamageBonus|Critical Damage Bonus]"
+        ],
+        "stats": [
+          {
+            "id": "local_critical_strike_multiplier_+",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      },
+      "Shield": {
+        "stat_text": [
+          "Hits against you have 20% reduced [CriticalDamageBonus|Critical Damage Bonus]"
+        ],
+        "stats": [
+          {
+            "id": "base_self_critical_strike_multiplier_-%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Shields",
+          "Bucklers"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreDexterity": {
+    "id": "Metadata/Items/SoulCores/SoulCoreDexterity",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "stat_text": [
+          "[StatConversion|Convert] 20% of Requirements to [Dexterity|Dexterity]"
+        ],
+        "stats": [
+          {
+            "id": "local_requirements_%_to_convert_to_dexterity",
+            "local": true
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "[StatConversion|Convert] 20% of Requirements to [Dexterity|Dexterity]"
+        ],
+        "stats": [
+          {
+            "id": "local_requirements_%_to_convert_to_dexterity",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreElemental": {
+    "id": "Metadata/Items/SoulCores/SoulCoreElemental",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Boots": {
+        "stat_text": [
+          "25% increased [AilmentThreshold|Elemental Ailment Threshold]"
+        ],
+        "stats": [
+          {
+            "id": "ailment_threshold_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "[Attack|Attacks] with this Weapon Penetrate 15% Elemental Resistances"
+        ],
+        "stats": [
+          {
+            "id": "local_elemental_penetration_%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreEnlighten": {
+    "id": "Metadata/Items/SoulCores/SoulCoreEnlighten",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "stat_text": [
+          "+5% to all [ElementalDamage|Elemental] [Resistances]"
+        ],
+        "stats": [
+          {
+            "id": "base_resist_all_elements_%",
+            "local": false
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "30% increased [ElementalDamage|Elemental] Damage with [Attack|Attacks]"
+        ],
+        "stats": [
+          {
+            "id": "elemental_damage_with_attack_skills_+%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreFreeze": {
+    "id": "Metadata/Items/SoulCores/SoulCoreFreeze",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Helmet": {
+        "stat_text": [
+          "+1% to [MaximumResistances|Maximum Cold Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_cold_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "30% increased [Freeze|Freeze] Buildup"
+        ],
+        "stats": [
+          {
+            "id": "hit_damage_freeze_multiplier_+%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreIgnite": {
+    "id": "Metadata/Items/SoulCores/SoulCoreIgnite",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Gloves": {
+        "stat_text": [
+          "+1% to [MaximumResistances|Maximum Fire Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_fire_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "30% increased [Flammability] [BuffMagnitude|Magnitude]"
+        ],
+        "stats": [
+          {
+            "id": "ignite_chance_+%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreIntelligence": {
+    "id": "Metadata/Items/SoulCores/SoulCoreIntelligence",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "stat_text": [
+          "[StatConversion|Convert] 20% of Requirements to [Intelligence|Intelligence]"
+        ],
+        "stats": [
+          {
+            "id": "local_requirements_%_to_convert_to_intelligence",
+            "local": true
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "[StatConversion|Convert] 20% of Requirements to [Intelligence|Intelligence]"
+        ],
+        "stats": [
+          {
+            "id": "local_requirements_%_to_convert_to_intelligence",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreLight": {
+    "id": "Metadata/Items/SoulCores/SoulCoreLight",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Gloves": {
+        "stat_text": [
+          "10% increased Quantity of Gold Dropped by Slain Enemies"
+        ],
+        "stats": [
+          {
+            "id": "gold_+%_from_enemies",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "+15 to [Spirit|Spirit]"
+        ],
+        "stats": [
+          {
+            "id": "base_spirit_from_equipment",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreMaxLife": {
+    "id": "Metadata/Items/SoulCores/SoulCoreMaxLife",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "3% increased maximum Life"
+        ],
+        "stats": [
+          {
+            "id": "maximum_life_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "Recover 2% of maximum Life on Kill"
+        ],
+        "stats": [
+          {
+            "id": "recover_%_maximum_life_on_kill",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreMaxMana": {
+    "id": "Metadata/Items/SoulCores/SoulCoreMaxMana",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Helmet": {
+        "stat_text": [
+          "3% increased maximum Mana"
+        ],
+        "stats": [
+          {
+            "id": "maximum_mana_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "Recover 2% of maximum Mana on Kill"
+        ],
+        "stats": [
+          {
+            "id": "recover_%_maximum_mana_on_kill",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreShock": {
+    "id": "Metadata/Items/SoulCores/SoulCoreShock",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Boots": {
+        "stat_text": [
+          "+1% to [MaximumResistances|Maximum Lightning Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "base_maximum_lightning_damage_resistance_%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "30% increased chance to [Shock]"
+        ],
+        "stats": [
+          {
+            "id": "shock_chance_+%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial1": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial1",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "stat_text": [
+          "+40% of [Armour] also applies to [Cold|Cold Damage]"
+        ],
+        "stats": [
+          {
+            "id": "base_armour_%_applies_to_cold_damage",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial10": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial10",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Caster Weapons": {
+        "stat_text": [
+          "50% chance when you gain a [Charges|Power Charge] to gain an additional [Charges|Power Charge]"
+        ],
+        "stats": [
+          {
+            "id": "chance_to_gain_1_more_power_charge_%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "50% chance when you gain a [Charges|Power Charge] to gain an additional [Charges|Power Charge]"
+        ],
+        "stats": [
+          {
+            "id": "chance_to_gain_1_more_power_charge_%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial11": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial11",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Boots": {
+        "stat_text": [
+          "12% increased speed of [Recoup] Effects"
+        ],
+        "stats": [
+          {
+            "id": "recoup_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Helmet": {
+        "stat_text": [
+          "8% of Damage taken [Recoup|Recouped] as Life"
+        ],
+        "stats": [
+          {
+            "id": "damage_taken_goes_to_life_over_4_seconds_%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial12": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial12",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "stat_text": [
+          "Enemies you [Curse] have -5% to Chaos [Resistances|Resistance]"
+        ],
+        "stats": [
+          {
+            "id": "enemies_chaos_resistance_%_while_cursed",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial13": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial13",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Bow": {
+        "stat_text": [
+          "20% increased [Projectile] Speed"
+        ],
+        "stats": [
+          {
+            "id": "base_projectile_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Bows"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial14": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial14",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Martial Weapons": {
+        "stat_text": [
+          "Adds 19 to 29 [Chaos] damage"
+        ],
+        "stats": [
+          {
+            "id": "local_minimum_added_chaos_damage",
+            "local": true
+          },
+          {
+            "id": "local_maximum_added_chaos_damage",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial15": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial15",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Caster Weapons": {
+        "stat_text": [
+          "[Minion|Minions] deal 40% increased Damage with [Command] Skills"
+        ],
+        "stats": [
+          {
+            "id": "minion_commanded_skill_damage_+%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Sceptre": {
+        "stat_text": [
+          "[Minion|Minions] deal 40% increased Damage with [Command] Skills"
+        ],
+        "stats": [
+          {
+            "id": "minion_commanded_skill_damage_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial2": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial2",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Boots": {
+        "stat_text": [
+          "+40% of [Armour] also applies to [Lightning|Lightning Damage]"
+        ],
+        "stats": [
+          {
+            "id": "base_armour_%_applies_to_lightning_damage",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial3": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial3",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Gloves": {
+        "stat_text": [
+          "+40% of [Armour] also applies to [Fire|Fire Damage]"
+        ],
+        "stats": [
+          {
+            "id": "base_armour_%_applies_to_fire_damage",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial4": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial4",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "30% [FasterESRechargeStart|faster start of Energy Shield Recharge]"
+        ],
+        "stats": [
+          {
+            "id": "energy_shield_delay_-%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Focus": {
+        "stat_text": [
+          "30% [FasterESRechargeStart|faster start of Energy Shield Recharge]"
+        ],
+        "stats": [
+          {
+            "id": "energy_shield_delay_-%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Foci"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial5": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial5",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "stat_text": [
+          "8% increased Skill Effect Duration",
+          "8% increased [CooldownRecovery|Cooldown Recovery Rate]"
+        ],
+        "stats": [
+          {
+            "id": "skill_effect_duration_+%",
+            "local": false
+          },
+          {
+            "id": "base_cooldown_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial6": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial6",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "stat_text": [
+          "+4 to Maximum [Rage]"
+        ],
+        "stats": [
+          {
+            "id": "maximum_rage",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial7": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial7",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Boots": {
+        "stat_text": [
+          "15% increased [Curse] Duration",
+          "15% increased [Poison] Duration"
+        ],
+        "stats": [
+          {
+            "id": "base_curse_duration_+%",
+            "local": false
+          },
+          {
+            "id": "base_poison_duration_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial8": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial8",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Caster Weapons": {
+        "stat_text": [
+          "50% chance when you gain a [Charges|Frenzy Charge] to gain an additional [Charges|Frenzy Charge]"
+        ],
+        "stats": [
+          {
+            "id": "chance_to_gain_1_more_frenzy_charge_%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "50% chance when you gain a [Charges|Frenzy Charge] to gain an additional [Charges|Frenzy Charge]"
+        ],
+        "stats": [
+          {
+            "id": "chance_to_gain_1_more_frenzy_charge_%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpecial9": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpecial9",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Caster Weapons": {
+        "stat_text": [
+          "50% chance when you gain an [Charges|Endurance Charge] to gain an additional [Charges|Endurance Charge]"
+        ],
+        "stats": [
+          {
+            "id": "chance_to_gain_1_more_endurance_charge_%",
+            "local": false
+          }
+        ],
+        "target": "Wand or Staff"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "50% chance when you gain an [Charges|Endurance Charge] to gain an additional [Charges|Endurance Charge]"
+        ],
+        "stats": [
+          {
+            "id": "chance_to_gain_1_more_endurance_charge_%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreSpeed": {
+    "id": "Metadata/Items/SoulCores/SoulCoreSpeed",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Boots": {
+        "stat_text": [
+          "15% reduced [Slow|Slowing] Potency of [Debuff|Debuffs] on You"
+        ],
+        "stats": [
+          {
+            "id": "base_slow_potency_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "5% increased [Attack] Speed"
+        ],
+        "stats": [
+          {
+            "id": "local_attack_speed_+%",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/SoulCoreStrength": {
+    "id": "Metadata/Items/SoulCores/SoulCoreStrength",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Armour": {
+        "stat_text": [
+          "[StatConversion|Convert] 20% of Requirements to [Strength|Strength]"
+        ],
+        "stats": [
+          {
+            "id": "local_requirements_%_to_convert_to_strength",
+            "local": true
+          }
+        ],
+        "target": "Armour"
+      },
+      "Martial Weapons": {
+        "stat_text": [
+          "[StatConversion|Convert] 20% of Requirements to [Strength|Strength]"
+        ],
+        "stats": [
+          {
+            "id": "local_requirements_%_to_convert_to_strength",
+            "local": true
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanBear": {
+    "id": "Metadata/Items/SoulCores/TalismanBear",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Helmet": {
+        "bonded_stat_text": [
+          "10% increased [Reservation] [Efficiency] of [Companion] Skills"
+        ],
+        "bonded_stats": [
+          {
+            "id": "reservation_efficiency_+%_of_companion_skills",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "8% increased Area of Effect"
+        ],
+        "stats": [
+          {
+            "id": "base_skill_area_of_effect_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "40% increased [Attack] Damage while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_damage_+%_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies|Allies] in your [Presence|Presence] deal 12 to 18 added [Attack|Attack] [Physical|Physical] Damage"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_attack_minimum_added_physical_damage",
+            "local": false
+          },
+          {
+            "id": "allies_in_presence_attack_maximum_added_physical_damage",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanBoar": {
+    "id": "Metadata/Items/SoulCores/TalismanBoar",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "15% increased [Warcry|Warcry] Cooldown Recovery Rate"
+        ],
+        "bonded_stats": [
+          {
+            "id": "warcry_cooldown_speed_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Gain 1 [Rage|Rage] on [Melee] [HitDamage|Hit]"
+        ],
+        "stats": [
+          {
+            "id": "gain_x_rage_on_melee_hit",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "25% increased Life Regeneration rate while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "life_regeneration_rate_+%_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies|Allies] in your [Presence|Presence] Regenerate 8 Life per second"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_life_regeneration_rate_per_minute",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanCat": {
+    "id": "Metadata/Items/SoulCores/TalismanCat",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "20% increased [Charm] Charges gained"
+        ],
+        "bonded_stats": [
+          {
+            "id": "charm_charges_gained_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "15% increased [Accuracy] Rating"
+        ],
+        "stats": [
+          {
+            "id": "accuracy_rating_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "25% increased [Critical|Critical Hit] Chance while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "critical_strike_chance_+%_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies|Allies] in your [Presence|Presence] have 14% increased [Critical|Critical Hit] Chance"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_critical_strike_chance_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanFox": {
+    "id": "Metadata/Items/SoulCores/TalismanFox",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Body Armour": {
+        "bonded_stat_text": [
+          "+4 to all [Attributes|Attributes]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "additional_all_attributes",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+2% to [Quality] of all Skills"
+        ],
+        "stats": [
+          {
+            "id": "all_skill_gem_quality_+",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "[Minion|Minions] have 20% increased Area of Effect"
+        ],
+        "bonded_stats": [
+          {
+            "id": "minion_skill_area_of_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "30% increased [Presence|Presence] Area of Effect"
+        ],
+        "stats": [
+          {
+            "id": "presence_area_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanMonkey": {
+    "id": "Metadata/Items/SoulCores/TalismanMonkey",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Helmet": {
+        "bonded_stat_text": [
+          "[Remnant|Remnants] can be collected from 20% further away"
+        ],
+        "bonded_stats": [
+          {
+            "id": "remnant_pickup_range_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Minion|Minions] have 12% increased maximum Life"
+        ],
+        "stats": [
+          {
+            "id": "minion_maximum_life_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "40% increased Damage while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "damage_+%_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies|Allies] in your [Presence|Presence] deal 30% increased Damage"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_damage_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanOwl": {
+    "id": "Metadata/Items/SoulCores/TalismanOwl",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Focus": {
+        "bonded_stat_text": [
+          "15% increased effect of [Archon] [Buff|Buffs] on you"
+        ],
+        "bonded_stats": [
+          {
+            "id": "archon_effect_on_you_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "10% increased [CooldownRecovery|Cooldown Recovery Rate]"
+        ],
+        "stats": [
+          {
+            "id": "base_cooldown_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Foci"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "10% increased [SkillSpeed|Skill Speed] while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "skill_speed_+%_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies|Allies] in your [Presence|Presence] have 8% increased Cast Speed"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_cast_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanOx": {
+    "id": "Metadata/Items/SoulCores/TalismanOx",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Sceptre": {
+        "bonded_stat_text": [
+          "+20% of [Armour|Armour] also applies to [ElementalDamage|Elemental Damage] while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "x%_of_armour_applies_to_elemental_damage_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies|Allies] in your [Presence|Presence] have +8% to all [ElementalDamage|Elemental] [Resistances|Resistances]"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_resist_all_elements_%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      },
+      "Shield": {
+        "bonded_stat_text": [
+          "10% chance for Damage of Enemies [HitDamage|Hitting] you to be [Unlucky]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "enemy_extra_damage_rolls_chance_%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "10% increased [Block] chance"
+        ],
+        "stats": [
+          {
+            "id": "local_block_chance_+%",
+            "local": true
+          }
+        ],
+        "target": [
+          "Shields",
+          "Bucklers"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanRabbit": {
+    "id": "Metadata/Items/SoulCores/TalismanRabbit",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Body Armour": {
+        "bonded_stat_text": [
+          "5% increased Quantity of Gold Dropped by Slain Enemies"
+        ],
+        "bonded_stats": [
+          {
+            "id": "gold_+%_from_enemies",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "5% increased [ItemRarity|Rarity of Items] found"
+        ],
+        "stats": [
+          {
+            "id": "base_item_found_rarity_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "[Minion|Minions] have 30% increased [CooldownRecovery|Cooldown Recovery Rate] for [Command] Skills"
+        ],
+        "bonded_stats": [
+          {
+            "id": "minion_command_skill_cooldown_speed_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "10% increased [Spirit|Spirit]"
+        ],
+        "stats": [
+          {
+            "id": "local_spirit_+%",
+            "local": true
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanSnake": {
+    "id": "Metadata/Items/SoulCores/TalismanSnake",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "[Remnant|Remnants] have 10% increased effect"
+        ],
+        "bonded_stats": [
+          {
+            "id": "remnant_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "5% increased [Curse] [BuffMagnitude|Magnitudes]"
+        ],
+        "stats": [
+          {
+            "id": "curse_effect_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "10% increased [SkillSpeed|Skill Speed] while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "skill_speed_+%_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies|Allies] in your [Presence|Presence] have 8% increased [Attack|Attack] Speed"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_attack_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanSpecial1": {
+    "id": "Metadata/Items/SoulCores/TalismanSpecial1",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "15% reduced [Slow|Slowing] Potency of [Debuff|Debuffs] on You"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_slow_potency_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "8% increased [Attack] Speed"
+        ],
+        "stats": [
+          {
+            "id": "attack_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanSpecial2": {
+    "id": "Metadata/Items/SoulCores/TalismanSpecial2",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Martial Weapons": {
+        "bonded_stat_text": [
+          "[Gain] 13% of Elemental Damage as Extra Chaos Damage"
+        ],
+        "bonded_stats": [
+          {
+            "id": "non_skill_base_elemental_damage_%_to_gain_as_chaos",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Targets can be affected by +1 of your [Poison|Poisons] at the same time",
+          "25% reduced [Poison] Duration"
+        ],
+        "stats": [
+          {
+            "id": "number_of_additional_poison_stacks",
+            "local": false
+          },
+          {
+            "id": "base_poison_duration_+%",
+            "local": false
+          }
+        ],
+        "target": "[MartialWeapon|Martial Weapon]"
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanSpecial3": {
+    "id": "Metadata/Items/SoulCores/TalismanSpecial3",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "20% increased [Glory] generation"
+        ],
+        "bonded_stats": [
+          {
+            "id": "glory_generation_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "20% increased total Power counted by Warcries"
+        ],
+        "stats": [
+          {
+            "id": "warcry_monster_power_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanSpecial4": {
+    "id": "Metadata/Items/SoulCores/TalismanSpecial4",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "bonded_stat_text": [
+          "[Meta] Skills have 12% increased [Reservation] [Efficiency]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "reservation_efficiency_+%_of_meta_skills",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "12% increased Cost [Efficiency]"
+        ],
+        "stats": [
+          {
+            "id": "base_skill_cost_efficiency_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanSpecial5": {
+    "id": "Metadata/Items/SoulCores/TalismanSpecial5",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "bonded_stat_text": [
+          "20% increased Area of Effect of [Curse|Curses]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "curse_area_of_effect_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "Enemies you [Curse] take 6% increased Damage"
+        ],
+        "stats": [
+          {
+            "id": "enemies_damage_taken_+%_while_cursed",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanSpecial6": {
+    "id": "Metadata/Items/SoulCores/TalismanSpecial6",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Body Armour": {
+        "bonded_stat_text": [
+          "[Storm] Skills have +1 to [Limit]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "storm_skill_limit_+",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "+1 [Charm] Slot"
+        ],
+        "stats": [
+          {
+            "id": "num_charm_slots",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanSpecial7": {
+    "id": "Metadata/Items/SoulCores/TalismanSpecial7",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": 50,
+    "limit": "1",
+    "categories": {
+      "Helmet": {
+        "bonded_stat_text": [
+          "[Minion|Minions] [Reviving|Revive] 8% faster"
+        ],
+        "bonded_stats": [
+          {
+            "id": "minion_resummon_speed_+%",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "8% increased [Reservation] [Efficiency] of [Minion] Skills"
+        ],
+        "stats": [
+          {
+            "id": "reservation_efficiency_+%_of_minion_skills",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanStag": {
+    "id": "Metadata/Items/SoulCores/TalismanStag",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Helmet": {
+        "bonded_stat_text": [
+          "[Thorns|Thorns Damage] has 40% chance to ignore Enemy [Armour|Armour]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "thorns_damage_has_%_chance_to_ignore_armour",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "50% increased [Thorns|Thorns] [Critical|Critical Hit] Chance"
+        ],
+        "stats": [
+          {
+            "id": "thorns_critical_strike_chance_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "40% increased [Attack] Damage while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "attack_damage_+%_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies|Allies] in your [Presence|Presence] deal 1 to 40 added [Attack|Attack] [Lightning|Lightning] Damage"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_attack_minimum_added_lightning_damage",
+            "local": false
+          },
+          {
+            "id": "allies_in_presence_attack_maximum_added_lightning_damage",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TalismanWolf": {
+    "id": "Metadata/Items/SoulCores/TalismanWolf",
+    "type_id": "Idol",
+    "type_name": "[Idol]",
+    "required_level": null,
+    "limit": null,
+    "categories": {
+      "Gloves": {
+        "bonded_stat_text": [
+          "15% reduced [BuffMagnitude|Magnitude] of [Bleeding] on You"
+        ],
+        "bonded_stats": [
+          {
+            "id": "base_bleeding_magnitude_+%_on_self",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "10% increased [BuffMagnitude|Magnitude] of [Bleeding|Bleeding] you inflict"
+        ],
+        "stats": [
+          {
+            "id": "base_bleeding_effect_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Sceptre": {
+        "bonded_stat_text": [
+          "25% increased [Critical|Critical Hit] Chance while [Shapeshift|Shapeshifted]"
+        ],
+        "bonded_stats": [
+          {
+            "id": "critical_strike_chance_+%_while_shapeshifted",
+            "local": false
+          }
+        ],
+        "stat_text": [
+          "[Allies] in your [Presence] have 14% increased [CriticalDamageBonus|Critical Damage Bonus]"
+        ],
+        "stats": [
+          {
+            "id": "allies_in_presence_critical_strike_multiplier_+",
+            "local": false
+          }
+        ],
+        "target": [
+          "Sceptres"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/TecrodsGaze": {
+    "id": "Metadata/Items/SoulCores/TecrodsGaze",
+    "type_id": "AbyssalEye",
+    "type_name": "[AbyssalEye|Abyssal Eye]",
+    "required_level": 60,
+    "limit": "1 [Ancient|Ancient Augment]",
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "Regenerate 1.5% of maximum Life per second"
+        ],
+        "stats": [
+          {
+            "id": "life_regeneration_rate_per_minute_%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Boots": {
+        "stat_text": [
+          "10% increased Movement Speed when on [LowLife|Low Life]"
+        ],
+        "stats": [
+          {
+            "id": "movement_velocity_+%_when_on_low_life",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Gloves": {
+        "stat_text": [
+          "25% increased Life Cost [Efficiency]"
+        ],
+        "stats": [
+          {
+            "id": "base_life_cost_efficiency_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/ThesisOfBlood": {
+    "id": "Metadata/Items/SoulCores/ThesisOfBlood",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 60,
+    "limit": "1 [Ancient|Ancient Augment]",
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "10% of Physical Damage prevented [Recoup|Recouped] as Life"
+        ],
+        "stats": [
+          {
+            "id": "physical_damage_prevented_recouped_as_life_%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Boots": {
+        "stat_text": [
+          "Lose 5% of maximum Life per second while Sprinting",
+          "25% increased Movement Speed while Sprinting"
+        ],
+        "stats": [
+          {
+            "id": "life_loss_%_per_minute_while_sprinting",
+            "local": false
+          },
+          {
+            "id": "sprint_movement_speed_+%",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Helmet": {
+        "stat_text": [
+          "Gain [Armour] equal to 25% of Life Lost from [HitDamage|Hits] in the past 8 seconds"
+        ],
+        "stats": [
+          {
+            "id": "gain_armour_from_%_life_loss_from_hits_lasting_8_seconds",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/ThesisOfExperiments": {
+    "id": "Metadata/Items/SoulCores/ThesisOfExperiments",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 60,
+    "limit": "1 [Ancient|Ancient Augment]",
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "+50% of [Armour|Armour] also applies to [Chaos|Chaos Damage] while on full [Defences|Energy Shield]"
+        ],
+        "stats": [
+          {
+            "id": "armour_%_also_applies_to_chaos_damage_while_at_full_es",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Gloves": {
+        "stat_text": [
+          "Each Runic Inscription from your [Curse] Skills causes you to Regenerate Mana per second equal to 10% of that Skill's Mana Cost"
+        ],
+        "stats": [
+          {
+            "id": "regenerate_%_of_curse_mana_cost_per_second_while_in_delay",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Helmet": {
+        "stat_text": [
+          "A random Skill that requires Glory generates 15% of its maximum Glory when your [Mark] [MarkActivate|Activates]"
+        ],
+        "stats": [
+          {
+            "id": "mark_grants_%_max_glory_to_random_skill_on_activate",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/ThesisOfSacrifice": {
+    "id": "Metadata/Items/SoulCores/ThesisOfSacrifice",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 60,
+    "limit": "1 [Ancient|Ancient Augment]",
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "You [Recoup] 50% of Damage taken by your [Offering|Offerings] as Life"
+        ],
+        "stats": [
+          {
+            "id": "recoup_life_equal_to_%_of_hit_damage_dealt_to_your_offerings",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Boots": {
+        "stat_text": [
+          "[Sacrifice] 10% of maximum Life to gain that much [Guard] when you Dodge Roll"
+        ],
+        "stats": [
+          {
+            "id": "sacrifice_%_life_to_gain_as_guard_on_dodge_roll",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Gloves": {
+        "stat_text": [
+          "One of your [Persistent] [Minion|Minions] revives when an [Offering] expires"
+        ],
+        "stats": [
+          {
+            "id": "revive_random_persistent_minion_on_offering_expiration",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/ThesisOfSouls": {
+    "id": "Metadata/Items/SoulCores/ThesisOfSouls",
+    "type_id": "SoulCore",
+    "type_name": "[SoulCore|Soul Core]",
+    "required_level": 60,
+    "limit": "1 [Ancient|Ancient Augment]",
+    "categories": {
+      "Boots": {
+        "stat_text": [
+          "Increases and Reductions to Movement Speed also\n apply to [ESRechargeRate|Energy Shield Recharge Rate]"
+        ],
+        "stats": [
+          {
+            "id": "increases_and_reductions_to_move_speed_apply_to_es_recharge_rate",
+            "local": false
+          }
+        ],
+        "target": [
+          "Boots"
+        ]
+      },
+      "Gloves": {
+        "stat_text": [
+          "[ESRecharge|Energy Shield Recharge] starts after spending a total of\n 2000 Mana, no more than once every 2 seconds"
+        ],
+        "stats": [
+          {
+            "id": "energy_shield_recharge_starts_after_spending_2000_mana_every_2_seconds",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Helmet": {
+        "stat_text": [
+          "+1 to maximum Mana per 2 [ItemDefences|Item Energy Shield] on [Equipped] Helmet"
+        ],
+        "stats": [
+          {
+            "id": "gain_X_max_mana_per_2_es_on_equipped_helmet",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  },
+  "Metadata/Items/SoulCores/UlamansGaze": {
+    "id": "Metadata/Items/SoulCores/UlamansGaze",
+    "type_id": "AbyssalEye",
+    "type_name": "[AbyssalEye|Abyssal Eye]",
+    "required_level": 60,
+    "limit": "1 [Ancient|Ancient Augment]",
+    "categories": {
+      "Body Armour": {
+        "stat_text": [
+          "Prevent +3% of Damage from [Deflect|Deflected] [HitDamage|Hits]"
+        ],
+        "stats": [
+          {
+            "id": "base_damage_%_deflected",
+            "local": false
+          }
+        ],
+        "target": [
+          "Body Armours"
+        ]
+      },
+      "Gloves": {
+        "stat_text": [
+          "[Critical|Critical Hit] chance is [Lucky] against [ParriedDebuff|Parried] enemies"
+        ],
+        "stats": [
+          {
+            "id": "critical_chance_luck_against_parry_debuffed_enemies",
+            "local": false
+          }
+        ],
+        "target": [
+          "Gloves"
+        ]
+      },
+      "Helmet": {
+        "stat_text": [
+          "+1 to [Accuracy] Rating per 1 [ItemDefences|Item Evasion Rating] on Equipped Helmet"
+        ],
+        "stats": [
+          {
+            "id": "accuracy_rating_+_per_evasion_rating_on_helmet",
+            "local": false
+          }
+        ],
+        "target": [
+          "Helmets"
+        ]
+      }
+    }
+  }
+}
