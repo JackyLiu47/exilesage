@@ -24,6 +24,7 @@ def search_mods(
     generation_type: str | None = None,
     tag: str | None = None,
     stat_id: str | None = None,
+    item_type: str | None = None,
     limit: int = 10,
 ) -> list[dict]:
     """Search the mods table and return a list of matching mod dicts.
@@ -35,6 +36,8 @@ def search_mods(
     generation_type: Exact match filter on generation_type (e.g. "prefix", "suffix").
     tag:             Filter mods whose tags JSON array contains this value.
     stat_id:         Filter mods that reference this stat id anywhere in the stats JSON array.
+    item_type:       Filter mods that can spawn on this item type (e.g. "wand", "body_armour", "helmet").
+                     Checks spawn_weights for a matching tag with weight > 0.
     limit:           Maximum rows to return (capped at MAX_RESULTS).
     """
     conn = None
@@ -44,14 +47,14 @@ def search_mods(
         rows: list = []
 
         if stat_id:
-            rows = _search_by_stat_id(conn, stat_id, domain, generation_type, tag, limit)
+            rows = _search_by_stat_id(conn, stat_id, domain, generation_type, tag, item_type, limit)
         elif query:
-            rows = _search_fts(conn, query, domain, generation_type, tag, limit)
+            rows = _search_fts(conn, query, domain, generation_type, tag, item_type, limit)
             if not rows:
                 log.debug("FTS returned 0 results for %r — falling back to LIKE", query)
-                rows = _search_like(conn, query, domain, generation_type, tag, limit)
+                rows = _search_like(conn, query, domain, generation_type, tag, item_type, limit)
         else:
-            rows = _search_filtered(conn, domain, generation_type, tag, limit)
+            rows = _search_filtered(conn, domain, generation_type, tag, item_type, limit)
 
         return [dict(r) for r in rows]
 
@@ -69,6 +72,7 @@ def _where_clauses(
     domain: str | None,
     generation_type: str | None,
     tag: str | None,
+    item_type: str | None = None,
     prefix: str = "",
 ) -> tuple[list[str], list]:
     """Build extra WHERE clauses and param list for optional filters."""
@@ -84,14 +88,21 @@ def _where_clauses(
     if tag:
         clauses.append(f"EXISTS (SELECT 1 FROM json_each({tbl}tags) WHERE value = ?)")
         params.append(tag)
+    if item_type:
+        clauses.append(
+            f"EXISTS (SELECT 1 FROM json_each({tbl}spawn_weights) "
+            "WHERE json_extract(value, '$.tag') = ? "
+            "AND json_extract(value, '$.weight') > 0)"
+        )
+        params.append(item_type)
     return clauses, params
 
 
-def _search_fts(conn, query, domain, generation_type, tag, limit):
+def _search_fts(conn, query, domain, generation_type, tag, item_type, limit):
     if not query or not query.strip():
         return []
     fts_term = query.strip() + "*"
-    extra_clauses, extra_params = _where_clauses(domain, generation_type, tag)
+    extra_clauses, extra_params = _where_clauses(domain, generation_type, tag, item_type)
 
     base_sql = (
         f"{_SELECT} WHERE rowid IN "
@@ -109,9 +120,9 @@ def _search_fts(conn, query, domain, generation_type, tag, limit):
     return conn.execute(base_sql, params).fetchall()
 
 
-def _search_like(conn, query, domain, generation_type, tag, limit):
+def _search_like(conn, query, domain, generation_type, tag, item_type, limit):
     like_val = f"%{query}%"
-    extra_clauses, extra_params = _where_clauses(domain, generation_type, tag)
+    extra_clauses, extra_params = _where_clauses(domain, generation_type, tag, item_type)
 
     base_sql = f"{_SELECT} WHERE (name LIKE ? OR type LIKE ?) "
     params: list = [like_val, like_val]
@@ -126,8 +137,8 @@ def _search_like(conn, query, domain, generation_type, tag, limit):
     return conn.execute(base_sql, params).fetchall()
 
 
-def _search_filtered(conn, domain, generation_type, tag, limit):
-    extra_clauses, extra_params = _where_clauses(domain, generation_type, tag)
+def _search_filtered(conn, domain, generation_type, tag, item_type, limit):
+    extra_clauses, extra_params = _where_clauses(domain, generation_type, tag, item_type)
 
     if extra_clauses:
         sql = f"{_SELECT} WHERE " + " AND ".join(extra_clauses) + " LIMIT ?"
@@ -137,9 +148,9 @@ def _search_filtered(conn, domain, generation_type, tag, limit):
     return conn.execute(f"{_SELECT} LIMIT ?", [limit]).fetchall()
 
 
-def _search_by_stat_id(conn, stat_id, domain, generation_type, tag, limit):
+def _search_by_stat_id(conn, stat_id, domain, generation_type, tag, item_type, limit):
     like_val = f"%{stat_id}%"
-    extra_clauses, extra_params = _where_clauses(domain, generation_type, tag)
+    extra_clauses, extra_params = _where_clauses(domain, generation_type, tag, item_type)
 
     base_sql = (
         f"{_SELECT} WHERE ("

@@ -8,10 +8,16 @@ Commands:
   exilesage update             Fetch fresh data, then ingest
 """
 
+import os
 import sys
 import logging
 from pathlib import Path
 from typing import Optional
+
+# Force UTF-8 output on Windows (GBK can't render Rich markdown bullets)
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 # Make the project root importable
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -30,7 +36,7 @@ from pipeline.update import run as update_run
 
 # ── Setup ──────────────────────────────────────────────────────────────────────
 
-console = Console()
+console = Console(legacy_windows=False)
 app = typer.Typer(
     name="exilesage",
     help="PoE2 AI advisor — ask questions about Path of Exile 2 crafting, builds, and mechanics.",
@@ -106,10 +112,13 @@ def ask_cmd(
 
         answer = ask(question, query_type=resolved_type)
 
-        # Render answer as markdown
+        # Render answer as markdown (fall back to plain text on Windows encoding errors)
         console.print()
-        md = Markdown(answer)
-        console.print(md)
+        try:
+            md = Markdown(answer)
+            console.print(md)
+        except Exception:
+            console.print(answer)
         console.print()
 
         # Footer
