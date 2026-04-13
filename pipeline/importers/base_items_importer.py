@@ -65,7 +65,7 @@ class BaseItemRow(BaseModel):
     def unwrap_int_range(cls, v):
         """JSON stores these as {"min": X, "max": X} — extract max."""
         if isinstance(v, dict):
-            return v.get("max") or v.get("min")
+            return v.get("max") if v.get("max") is not None else v.get("min")
         return v
 
     @field_validator(
@@ -77,7 +77,7 @@ class BaseItemRow(BaseModel):
     def unwrap_float_range(cls, v):
         """Same dict pattern for float fields."""
         if isinstance(v, dict):
-            return v.get("max") or v.get("min")
+            return v.get("max") if v.get("max") is not None else v.get("min")
         return v
 
     class Config:
@@ -113,6 +113,9 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
 
     for item_id, item_data in raw_data.items():
         try:
+            # Ensure the 'id' field is set from the dict key if not present
+            if "id" not in item_data:
+                item_data["id"] = item_id
             # Validate with Pydantic
             row = BaseItemRow(**item_data)
             valid_rows.append(row)

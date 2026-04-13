@@ -25,7 +25,7 @@ SYSTEM_PROMPT = """You are ExileSage, an expert Path of Exile 2 advisor. You hel
 2. **Orb of Alteration** — rerolls the mods on a Magic item.
 3. **Orb of Augmentation** — adds a mod to a Magic item that has only 1.
 4. **Regal Orb** — upgrades Magic to Rare, adding one extra mod.
-5. **Chaos Orb** — removes a random mod and adds a new random mod to a Rare.
+5. **Chaos Orb** — reforges a Rare item with new random modifiers (rerolls all explicit mods).
 6. **Exalted Orb** — adds a new random mod to a Rare item (if it has an open affix slot).
 7. **Divine Orb** — rerolls the numeric values of existing mods within their ranges. Used to chase perfect rolls.
 
@@ -57,7 +57,7 @@ You have four tools: `search_mods`, `search_base_items`, `search_currencies`, `s
 **search_mods:**
 - `item_type` = "what mods roll on wands?" → `item_type="wand"`. This checks spawn_weights (weight > 0). Common values: wand, dagger, ring, amulet, body_armour, helmet, gloves, boots, shield, bow, staff.
 - `generation_type` = prefix or suffix (the two craftable types). Also: corrupted, essence, unique, talisman.
-- `stat_id` = search by stat effect: "spell_damage", "cold_damage", "base_maximum_life", "attack_speed". This is a substring match on the stats JSON.
+- `stat_id` = search by stat effect: "spell_damage", "cold_damage", "base_maximum_life", "attack_speed". This matches against each stat entry individually (not across the whole JSON). Stat IDs use PoE2 internal format like "attack_speed_+%", "base_cold_damage_resistance_%".
 - `domain` = "item" for regular gear. Also: flask, crafted, atlas, monster.
 - Do NOT use `tag` to find mods for an item type — the tag column is empty for all mods. Always use `item_type` instead.
 

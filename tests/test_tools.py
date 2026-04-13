@@ -482,3 +482,89 @@ def test_chaos_orb_description_clean():
     desc = results[0].get("description", "")
     assert "[" not in desc, f"Wiki markup in Chaos Orb description: {desc}"
     assert "Rare" in desc, "Chaos Orb description should mention 'Rare'"
+
+
+# ── Accuracy fixes (Round 3 regression) ──────────────────────────────────────
+
+def test_base_items_weapon_columns_present():
+    """A3: search_base_items must return weapon stats for Wand bases."""
+    results = search_base_items(item_class="Wand", limit=3)
+    assert len(results) > 0
+    keys = results[0].keys()
+    for col in ("physical_damage_min", "physical_damage_max",
+                "critical_strike_chance", "attack_time"):
+        assert col in keys, f"Missing weapon column: {col}"
+
+def test_mods_group_name_present():
+    """A4: search_mods must return group_name column for exclusivity checks."""
+    results = search_mods(domain="item", limit=3)
+    assert len(results) > 0
+    assert "group_name" in results[0].keys(), "group_name missing from mod results"
+
+def test_stat_id_per_element_match():
+    """A1: stat_id search matches per-element, not across entire JSON blob."""
+    results = search_mods(stat_id="cold_damage", limit=20)
+    for r in results:
+        import json as _json
+        stats = _json.loads(r["stats"]) if isinstance(r["stats"], str) else r["stats"]
+        stat_ids = [s.get("id", "") for s in stats]
+        # At least one stat ID must contain 'cold_damage'
+        assert any("cold_damage" in sid for sid in stat_ids), (
+            f"Mod {r['id']} matched stat_id='cold_damage' but its stats are: {stat_ids}"
+        )
+
+def test_stat_id_with_item_type_filter():
+    """A1+item_type: stat_id + item_type should return only eligible mods."""
+    results = search_mods(stat_id="base_maximum_life", item_type="ring", limit=5)
+    assert isinstance(results, list)
+    # All results must have base_maximum_life as an exact stat
+    for r in results:
+        import json as _json
+        stats = _json.loads(r["stats"]) if isinstance(r["stats"], str) else r["stats"]
+        stat_ids = [s.get("id", "") for s in stats]
+        assert "base_maximum_life" in stat_ids
+
+
+# ── FTS5 keyword sanitization (B1 regression) ────────────────────────────────
+
+def test_fts_keyword_NOT_does_not_exclude():
+    """B1: 'fire NOT cold' should not be parsed as FTS boolean."""
+    results = search_mods(query="fire NOT cold", limit=5)
+    assert isinstance(results, list)  # must not crash or silently exclude
+
+def test_fts_keyword_OR_does_not_alter():
+    """B1: 'chaos OR physical' should not be parsed as FTS OR."""
+    results = search_mods(query="chaos OR physical", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_keyword_AND_stripped():
+    """B1: 'fire AND damage' should work as plain text search."""
+    results = search_mods(query="fire AND damage", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_keyword_NEAR_stripped():
+    """B1: 'NEAR damage' should not trigger FTS NEAR operator."""
+    results = search_mods(query="NEAR damage", limit=5)
+    assert isinstance(results, list)
+
+
+# ── sanitize_fts unit tests ──────────────────────────────────────────────────
+
+def test_sanitize_fts_strips_keywords():
+    """B1: FTS keywords must be removed from sanitized output."""
+    from exilesage.db import sanitize_fts
+    result = sanitize_fts("fire NOT cold")
+    assert "NOT" not in result.split()
+    assert "fire" in result
+    assert "cold" in result
+
+def test_sanitize_fts_strips_or():
+    from exilesage.db import sanitize_fts
+    result = sanitize_fts("chaos OR physical")
+    assert " OR " not in result
+
+def test_sanitize_fts_keyword_only():
+    """Query that is only FTS keywords should return empty."""
+    from exilesage.db import sanitize_fts
+    result = sanitize_fts("NOT AND OR")
+    assert result == ""

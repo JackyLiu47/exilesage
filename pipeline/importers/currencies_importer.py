@@ -84,6 +84,9 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
     # Validate and prepare rows
     for currency_id, currency_dict in currencies_data.items():
         try:
+            # Ensure the 'id' field is set from the dict key if not present
+            if "id" not in currency_dict:
+                currency_dict["id"] = currency_id
             currency_row = CurrencyRow(**currency_dict)
 
             # Prepare tuple for insertion (matches table columns in order)

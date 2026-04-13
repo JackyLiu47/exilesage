@@ -20,15 +20,18 @@ def get_connection(db_path=None) -> sqlite3.Connection:
 
 
 _FTS_SPECIAL = re.compile(r'[+\-*"(){}[\]^~:@#]')
+_FTS_KEYWORDS = re.compile(r'\b(AND|OR|NOT|NEAR)\b', re.IGNORECASE)
 
 
 def sanitize_fts(query: str) -> str:
     """Sanitize a query string for FTS5 MATCH.
 
-    Strips FTS5 operators (+, -, *, ", etc.) that would cause syntax errors,
-    then appends * for prefix matching. Returns empty string if nothing remains.
+    Strips FTS5 operators (+, -, *, ", etc.) and boolean keywords (AND, OR,
+    NOT, NEAR) that would alter query semantics, then appends * for prefix
+    matching. Returns empty string if nothing remains.
     """
-    cleaned = _FTS_SPECIAL.sub(" ", query).strip()
+    cleaned = _FTS_SPECIAL.sub(" ", query)
+    cleaned = _FTS_KEYWORDS.sub(" ", cleaned).strip()
     if not cleaned:
         return ""
     return cleaned + "*"

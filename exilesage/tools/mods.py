@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 
 _SELECT = (
     "SELECT rowid, id, name, type, domain, generation_type, "
-    "required_level, stats, spawn_weights, tags FROM mods"
+    "required_level, group_name, stats, spawn_weights, tags FROM mods"
 )
 
 
@@ -151,15 +151,18 @@ def _search_filtered(conn, domain, generation_type, tag, item_type, limit):
 
 
 def _search_by_stat_id(conn, stat_id, domain, generation_type, tag, item_type, limit):
-    like_val = f"%{stat_id}%"
     extra_clauses, extra_params = _where_clauses(domain, generation_type, tag, item_type)
 
+    # Use json_each to match stat IDs per-element (avoids false positives from
+    # matching across different stats in the same JSON blob).
+    like_val = f"%{stat_id}%"
     base_sql = (
-        f"{_SELECT} WHERE ("
-        "json_extract(stats, '$[0].id') LIKE ? OR stats LIKE ?"
+        f"{_SELECT} WHERE EXISTS ("
+        "SELECT 1 FROM json_each(stats) "
+        "WHERE json_extract(value, '$.id') LIKE ?"
         ") "
     )
-    params: list = [like_val, like_val]
+    params: list = [like_val]
 
     if extra_clauses:
         base_sql += "AND " + " AND ".join(extra_clauses) + " "

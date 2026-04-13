@@ -13,7 +13,9 @@ log = logging.getLogger(__name__)
 
 _SELECT = (
     "SELECT id, name, item_class, domain, drop_level, "
-    "tags, implicits, armour, evasion, energy_shield FROM base_items"
+    "tags, implicits, armour, evasion, energy_shield, "
+    "physical_damage_min, physical_damage_max, "
+    "critical_strike_chance, attack_time FROM base_items"
 )
 
 
