@@ -18,8 +18,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
-import sys
 from pathlib import Path
 from typing import Any
 
@@ -30,13 +28,19 @@ try:
 except ImportError:
     pass
 
-# Make the project root importable when this module is run directly or from
-# contexts where the package isn't installed (dev / tests / CLI shim).
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+import anthropic
 
-import anthropic  # noqa: E402
+# Module-level singleton — avoids re-creating HTTP sessions per call
+_client: anthropic.Anthropic | None = None
 
-from exilesage.config import (  # noqa: E402
+
+def _get_client() -> anthropic.Anthropic:
+    global _client
+    if _client is None:
+        _client = anthropic.Anthropic()
+    return _client
+
+from exilesage.config import (
     MODEL_MAP,
     ROUTER_MODEL,
     MAX_TOOL_ITER,
@@ -44,27 +48,13 @@ from exilesage.config import (  # noqa: E402
     MAX_CLASSIFIER_TOKENS,
     QueryType,
 )
-from exilesage.advisor.system_prompt import SYSTEM_PROMPT  # noqa: E402
-from exilesage.advisor.tool_defs import TOOL_DEFINITIONS  # noqa: E402
-from exilesage.tools.mods import search_mods  # noqa: E402
-from exilesage.tools.items import search_base_items  # noqa: E402
-from exilesage.tools.currencies import search_currencies  # noqa: E402
-from exilesage.tools.augments import search_augments  # noqa: E402
+from exilesage.advisor.system_prompt import SYSTEM_PROMPT, CLASSIFIER_SYSTEM
+from exilesage.advisor.tool_defs import TOOL_DEFINITIONS
+from exilesage.tools import TOOL_DISPATCH
 
 log = logging.getLogger(__name__)
 
 # ── Query classification ──────────────────────────────────────────────────────
-
-_CLASSIFIER_SYSTEM = (
-    "You are a query classifier for ExileSage, a Path of Exile 2 advisor. "
-    "Classify the user's question into exactly one of these categories:\n"
-    "  factual    — simple lookup: 'what does X do', 'what are the stats of Y'\n"
-    "  crafting   — how to craft / improve a specific item\n"
-    "  analysis   — comparative or evaluative: 'what's best for X', 'is Y good'\n"
-    "  guide      — how to play a build / mechanic walkthrough\n"
-    "  innovation — open-ended design: 'design a novel build', 'invent a strategy'\n"
-    "Respond with ONE lowercase word from that list and nothing else."
-)
 
 
 def classify_query(question: str) -> QueryType:
@@ -75,11 +65,10 @@ def classify_query(question: str) -> QueryType:
     which routes to Sonnet — a safe middle ground.
     """
     try:
-        client = anthropic.Anthropic()
-        resp = client.messages.create(
+        resp = _get_client().messages.create(
             model=ROUTER_MODEL,
             max_tokens=MAX_CLASSIFIER_TOKENS,
-            system=_CLASSIFIER_SYSTEM,
+            system=CLASSIFIER_SYSTEM,
             messages=[{"role": "user", "content": question}],
         )
         # Extract the first text block
@@ -103,13 +92,6 @@ def classify_query(question: str) -> QueryType:
 
 # ── Tool dispatch ─────────────────────────────────────────────────────────────
 
-_TOOL_DISPATCH = {
-    "search_mods":       search_mods,
-    "search_base_items": search_base_items,
-    "search_currencies": search_currencies,
-    "search_augments":   search_augments,
-}
-
 
 def execute_tool(tool_name: str, tool_input: dict) -> str:
     """
@@ -117,7 +99,7 @@ def execute_tool(tool_name: str, tool_input: dict) -> str:
     result as a JSON string (which is what the Anthropic API expects inside a
     tool_result content block).
     """
-    fn = _TOOL_DISPATCH.get(tool_name)
+    fn = TOOL_DISPATCH.get(tool_name)
     if fn is None:
         err = {"error": f"unknown tool: {tool_name}"}
         log.error("execute_tool: %s", err)
@@ -164,7 +146,7 @@ def ask(question: str, query_type: QueryType | None = None) -> str:
     model = MODEL_MAP[query_type]
     log.info("ask: query_type=%s model=%s", query_type.value, model)
 
-    client = anthropic.Anthropic()
+    client = _get_client()
     messages: list[dict] = [{"role": "user", "content": question}]
 
     response = None

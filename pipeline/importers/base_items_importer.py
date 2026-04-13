@@ -5,13 +5,9 @@ Loads base_items.json and populates the base_items table in SQLite.
 
 import json
 import logging
-import sys
-from pathlib import Path
 from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator, model_validator
-
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from exilesage.db import get_connection
 from exilesage.config import PROCESSED_DIR
@@ -128,43 +124,39 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
         return 0, skipped
 
     # Prepare data for database insert
-    conn = get_connection(db_path)
-    cursor = conn.cursor()
+    insert_data = []
+    for row in valid_rows:
+        properties = {
+            "charges_max": row.charges_max,
+            "charges_per_use": row.charges_per_use,
+            "duration": row.duration,
+            "life_per_use": row.life_per_use,
+            "mana_per_use": row.mana_per_use,
+        }
 
-    try:
-        # Build INSERT data
-        insert_data = []
-        for row in valid_rows:
-            # Build properties JSON from specified fields
-            properties = {
-                "charges_max": row.charges_max,
-                "charges_per_use": row.charges_per_use,
-                "duration": row.duration,
-                "life_per_use": row.life_per_use,
-                "mana_per_use": row.mana_per_use,
-            }
+        insert_data.append((
+            row.id,
+            row.name,
+            row.item_class,
+            row.domain,
+            row.drop_level,
+            json.dumps(row.tags) if row.tags else None,
+            json.dumps(row.implicits) if row.implicits else None,
+            json.dumps(row.requirements) if row.requirements else None,
+            json.dumps(properties),
+            row.armour,
+            row.evasion,
+            row.energy_shield,
+            row.physical_damage_min,
+            row.physical_damage_max,
+            row.critical_strike_chance,
+            row.attack_time,
+            row.stack_size,
+        ))
 
-            insert_data.append((
-                row.id,
-                row.name,
-                row.item_class,
-                row.domain,
-                row.drop_level,
-                json.dumps(row.tags) if row.tags else None,
-                json.dumps(row.implicits) if row.implicits else None,
-                json.dumps(row.requirements) if row.requirements else None,
-                json.dumps(properties),
-                row.armour,
-                row.evasion,
-                row.energy_shield,
-                row.physical_damage_min,
-                row.physical_damage_max,
-                row.critical_strike_chance,
-                row.attack_time,
-                row.stack_size,
-            ))
+    with get_connection(db_path) as conn:
+        cursor = conn.cursor()
 
-        # INSERT OR REPLACE in single executemany
         cursor.executemany(
             """INSERT OR REPLACE INTO base_items
                (id, name, item_class, domain, drop_level, tags, implicits,
@@ -186,17 +178,10 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
 
         conn.commit()
 
-        log.info(f"Imported {len(valid_rows)} base_items ({skipped} skipped)")
-        print(f"Imported {len(valid_rows)} base_items ({skipped} skipped)")
+    log.info(f"Imported {len(valid_rows)} base_items ({skipped} skipped)")
+    print(f"Imported {len(valid_rows)} base_items ({skipped} skipped)")
 
-        return len(valid_rows), skipped
-
-    except Exception as e:
-        log.error(f"Database error: {e}")
-        conn.rollback()
-        return 0, skipped
-    finally:
-        conn.close()
+    return len(valid_rows), skipped
 
 
 if __name__ == "__main__":

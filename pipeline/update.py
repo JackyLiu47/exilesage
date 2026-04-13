@@ -11,7 +11,6 @@ Usage:
 import argparse
 import json
 import logging
-import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -21,7 +20,6 @@ RAW_DIR = ROOT / "data" / "raw"
 PROCESSED_DIR = ROOT / "data" / "processed"
 DIFF_DIR = ROOT / "data" / "diffs"
 
-sys.path.insert(0, str(ROOT))
 from scraper.repoe import fetch_all, REPOE_FILES, CRAFTING_FILES
 from scraper.processor import process_all
 

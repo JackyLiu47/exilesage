@@ -3,11 +3,6 @@ Unit tests for all 4 tool functions. No API key required.
 Tests run against the live exilesage.db.
 """
 
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
 import pytest
 from exilesage.tools.mods import search_mods
 from exilesage.tools.items import search_base_items
@@ -568,3 +563,108 @@ def test_sanitize_fts_keyword_only():
     from exilesage.db import sanitize_fts
     result = sanitize_fts("NOT AND OR")
     assert result == ""
+
+
+# ── LIKE fallback path (T3) ─────────────────────────────────────────────────
+
+def test_like_fallback_mods():
+    """T3: query that won't FTS-match should fall back to LIKE and still return results."""
+    # Use a name substring that exists in mod names but is unlikely to be an FTS token
+    results = search_mods(query="Strength", limit=5)
+    assert len(results) > 0, "LIKE fallback should find Strength mods"
+
+def test_like_fallback_items():
+    """T3: LIKE fallback for base_items."""
+    results = search_base_items(query="Iron", limit=5)
+    assert len(results) > 0
+
+def test_like_fallback_currencies():
+    """T3: LIKE fallback for currencies."""
+    results = search_currencies(query="Orb", limit=5)
+    assert len(results) > 0
+
+
+# ── FTS edge cases (T4) ─────────────────────────────────────────────────────
+
+def test_fts_unicode_input():
+    """T4: Unicode input should not crash FTS."""
+    from exilesage.db import sanitize_fts
+    result = sanitize_fts("résistance")
+    assert isinstance(result, str)
+    # Should not crash tool either
+    results = search_mods(query="résistance", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_multiword_does_not_crash():
+    """T4: Multi-word query should not crash (may return 0 if no match)."""
+    results = search_mods(query="fire damage", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_single_char():
+    """T4: Single character should not crash."""
+    results = search_mods(query="a", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_very_long_query():
+    """T4: Very long query should not crash."""
+    long_q = "fire " * 100
+    results = search_mods(query=long_q, limit=5)
+    assert isinstance(results, list)
+
+
+# ── Importer unit tests (T2) ────────────────────────────────────────────────
+
+def test_strip_wiki_function():
+    """T2: _strip_wiki should convert [Key|Display] to Display."""
+    from pipeline.importers.currencies_importer import _strip_wiki
+    assert _strip_wiki("[ItemRarity|Rare]") == "Rare"
+    assert _strip_wiki("a [Foo|Bar] item") == "a Bar item"
+    assert _strip_wiki(None) is None
+    assert _strip_wiki("") == ""
+    assert _strip_wiki("no markup here") == "no markup here"
+
+def test_strip_wiki_multiple():
+    """T2: _strip_wiki handles multiple markup instances."""
+    from pipeline.importers.currencies_importer import _strip_wiki
+    result = _strip_wiki("[A|B] and [C|D]")
+    assert result == "B and D"
+
+def test_augment_strip_wiki():
+    """T2: augments_importer also has _strip_wiki."""
+    from pipeline.importers.augments_importer import _strip_wiki
+    assert _strip_wiki("[Key|Display]") == "Display"
+
+def test_importer_pydantic_validation_skip():
+    """T2: Pydantic validation failure should skip row, not crash."""
+    from pipeline.importers.mods_importer import ModRow
+    from pydantic import ValidationError
+    # ModRow requires 'id' as str — passing int should fail gracefully
+    try:
+        ModRow(id=None, name="test")
+        assert False, "Should have raised ValidationError"
+    except ValidationError:
+        pass  # Expected — importers catch this and skip
+
+def test_init_db_idempotent():
+    """T5: calling init_db twice should not corrupt the database."""
+    from exilesage.db import init_db, get_connection
+    init_db()
+    init_db()
+    conn = get_connection()
+    try:
+        count = conn.execute("SELECT COUNT(*) FROM mods").fetchone()[0]
+        assert count > 0, "mods table should still have data after double init_db"
+    finally:
+        conn.close()
+
+def test_schema_version_in_meta():
+    """M3: meta table should have schema_version column after init_db."""
+    from exilesage.db import init_db, get_connection
+    init_db()  # ensures column is added via _ensure_schema_version
+    conn = get_connection()
+    try:
+        row = conn.execute("SELECT schema_version FROM meta WHERE id=1").fetchone()
+        if row is not None:
+            assert row[0] >= 1, "schema_version should be >= 1"
+    finally:
+        conn.close()

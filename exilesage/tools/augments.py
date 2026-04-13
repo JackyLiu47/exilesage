@@ -1,10 +1,6 @@
 """Tool: search_augments — query the augments table for ExileSage."""
 
-import sys
 import logging
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from exilesage.db import get_connection, sanitize_fts
 from exilesage.config import MAX_RESULTS

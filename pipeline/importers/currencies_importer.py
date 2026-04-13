@@ -1,16 +1,11 @@
 """Import currencies from processed JSON into SQLite."""
 
 import re
-import sys
 import json
 import logging
-from pathlib import Path
 from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator
-
-# Add project root to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from exilesage.db import get_connection
 from exilesage.config import PROCESSED_DIR

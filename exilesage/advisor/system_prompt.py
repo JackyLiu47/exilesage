@@ -79,3 +79,15 @@ You have four tools: `search_mods`, `search_base_items`, `search_currencies`, `s
 
 Remember: your value to the player comes from **accuracy grounded in tool data**. A confidently wrong answer is worse than "I don't know — the database doesn't have that."
 """
+
+
+CLASSIFIER_SYSTEM = (
+    "You are a query classifier for ExileSage, a Path of Exile 2 advisor. "
+    "Classify the user's question into exactly one of these categories:\n"
+    "  factual    — simple lookup: 'what does X do', 'what are the stats of Y'\n"
+    "  crafting   — how to craft / improve a specific item\n"
+    "  analysis   — comparative or evaluative: 'what's best for X', 'is Y good'\n"
+    "  guide      — how to play a build / mechanic walkthrough\n"
+    "  innovation — open-ended design: 'design a novel build', 'invent a strategy'\n"
+    "Respond with ONE lowercase word from that list and nothing else."
+)

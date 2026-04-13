@@ -37,9 +37,46 @@ def sanitize_fts(query: str) -> str:
     return cleaned + "*"
 
 
+CURRENT_SCHEMA_VERSION = 1
+
+# Numbered migrations: each is (version, sql). Run in order when schema_version < target.
+_MIGRATIONS: list[tuple[int, str]] = [
+    # (2, "ALTER TABLE mods ADD COLUMN patch_version TEXT;"),
+]
+
+
 def init_db() -> None:
-    """Create all tables from schema.sql if they don't exist."""
+    """Create all tables from schema.sql if they don't exist, then run migrations."""
     schema = Path(SCHEMA_PATH).read_text(encoding="utf-8")
     with get_connection() as conn:
         conn.executescript(schema)
-    log.info("DB initialised at %s", DB_PATH)
+        _ensure_schema_version(conn)
+        _apply_migrations(conn)
+    log.info("DB initialised at %s (schema v%d)", DB_PATH, CURRENT_SCHEMA_VERSION)
+
+
+def _ensure_schema_version(conn: sqlite3.Connection) -> None:
+    """Add schema_version column to meta if missing (upgrade from pre-v1 DBs)."""
+    cols = {row[1] for row in conn.execute("PRAGMA table_info(meta)").fetchall()}
+    if "schema_version" not in cols:
+        conn.execute("ALTER TABLE meta ADD COLUMN schema_version INTEGER NOT NULL DEFAULT 1")
+        conn.commit()
+
+
+def _apply_migrations(conn: sqlite3.Connection) -> None:
+    """Run any pending schema migrations based on schema_version in meta."""
+    row = conn.execute(
+        "SELECT schema_version FROM meta WHERE id = 1"
+    ).fetchone()
+    if row is None:
+        return  # meta row not yet created (ingest.py creates it)
+    current = row[0] if row[0] is not None else 1
+    for version, sql in _MIGRATIONS:
+        if current < version:
+            log.info("Applying migration to schema v%d", version)
+            conn.execute(sql)
+            conn.execute(
+                "UPDATE meta SET schema_version = ? WHERE id = 1", (version,)
+            )
+            current = version
+    conn.commit()

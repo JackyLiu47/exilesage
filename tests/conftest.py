@@ -2,12 +2,8 @@
 Shared pytest fixtures for ExileSage tests.
 """
 
-import sys
 import os
 from pathlib import Path
-
-# Make project root importable
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Load .env for integration tests
 try:

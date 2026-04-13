@@ -3,11 +3,7 @@ Ingest all processed JSON data into exilesage.db.
 Run: python -m pipeline.ingest
 """
 
-import sys
 import logging
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from exilesage.db import init_db, get_connection
 from exilesage.config import DB_PATH

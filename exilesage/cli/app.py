@@ -19,9 +19,6 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-# Make the project root importable
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
 import typer
 from rich.console import Console
 from rich.panel import Panel

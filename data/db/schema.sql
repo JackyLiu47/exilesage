@@ -3,6 +3,7 @@
 
 CREATE TABLE IF NOT EXISTS meta (
     id                   INTEGER PRIMARY KEY CHECK (id = 1),
+    schema_version       INTEGER NOT NULL DEFAULT 1,
     patch_version        TEXT NOT NULL DEFAULT 'unknown',
     last_import_at       TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     mods_count           INTEGER DEFAULT 0,

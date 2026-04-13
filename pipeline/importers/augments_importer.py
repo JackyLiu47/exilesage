@@ -1,13 +1,10 @@
 import json
 import logging
 import re
-import sys
 from pathlib import Path
 from typing import Optional
 
 from pydantic import BaseModel, Field, ValidationError
-
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from exilesage.config import PROCESSED_DIR
 from exilesage.db import get_connection
@@ -95,8 +92,7 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
             )
             skipped += 1
 
-    conn = get_connection(db_path)
-    try:
+    with get_connection(db_path) as conn:
         cursor = conn.cursor()
 
         # Insert all valid rows in a single executemany
@@ -120,8 +116,6 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
         )
 
         conn.commit()
-    finally:
-        conn.close()
 
     imported = len(rows)
     print(f"Imported {imported} augments ({skipped} skipped)")
