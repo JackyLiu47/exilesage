@@ -125,7 +125,7 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
         return 0, skipped
 
     # Prepare data for database insert
-    conn = get_connection()
+    conn = get_connection(db_path)
     cursor = conn.cursor()
 
     try:

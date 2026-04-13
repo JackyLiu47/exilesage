@@ -53,9 +53,6 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
     Returns:
         tuple: (imported_count, skipped_count)
     """
-    conn = get_connection(db_path)
-    cursor = conn.cursor()
-
     # Load augments.json
     augments_file = Path(PROCESSED_DIR) / "augments.json"
     if not augments_file.exists():
@@ -98,28 +95,33 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
             )
             skipped += 1
 
-    # Insert all valid rows in a single executemany
-    if rows:
-        cursor.executemany(
-            """
-            INSERT OR REPLACE INTO augments
-            (id, type_id, type_name, required_level, limit_info, categories)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """,
-            rows,
+    conn = get_connection(db_path)
+    try:
+        cursor = conn.cursor()
+
+        # Insert all valid rows in a single executemany
+        if rows:
+            cursor.executemany(
+                """
+                INSERT OR REPLACE INTO augments
+                (id, type_id, type_name, required_level, limit_info, categories)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                rows,
+            )
+
+        # Rebuild FTS5 index
+        cursor.execute("INSERT INTO augments_fts(augments_fts) VALUES('rebuild')")
+
+        # Update meta table
+        cursor.execute(
+            "UPDATE meta SET augments_count=? WHERE id=1",
+            (len(rows),),
         )
 
-    # Rebuild FTS5 index
-    cursor.execute("INSERT INTO augments_fts(augments_fts) VALUES('rebuild')")
-
-    # Update meta table
-    cursor.execute(
-        "UPDATE meta SET augments_count=? WHERE id=1",
-        (len(rows),),
-    )
-
-    conn.commit()
-    conn.close()
+        conn.commit()
+    finally:
+        conn.close()
 
     imported = len(rows)
     print(f"Imported {imported} augments ({skipped} skipped)")

@@ -1,5 +1,6 @@
 """Import currencies from processed JSON into SQLite."""
 
+import re
 import sys
 import json
 import logging
@@ -15,6 +16,15 @@ from exilesage.db import get_connection
 from exilesage.config import PROCESSED_DIR
 
 log = logging.getLogger(__name__)
+
+_WIKI_RE = re.compile(r'\[([^|]+)\|([^\]]+)\]')
+
+
+def _strip_wiki(s: str | None) -> str | None:
+    """Strip PoE wiki markup like [Key|Display] → Display."""
+    if not s:
+        return s
+    return _WIKI_RE.sub(r'\2', s)
 
 
 class CurrencyRow(BaseModel):
@@ -85,7 +95,7 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
                 currency_row.stack_size,
                 currency_row.stack_size_currency_tab,
                 currency_row.full_stack_turns_into,
-                currency_row.description,
+                _strip_wiki(currency_row.description),
                 currency_row.inherits_from,
             )
             rows_to_insert.append(row)
@@ -98,7 +108,7 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
 
     # Insert all rows in one batch
     if rows_to_insert:
-        with get_connection() as conn:
+        with get_connection(db_path) as conn:
             cursor = conn.cursor()
             cursor.executemany(
                 """

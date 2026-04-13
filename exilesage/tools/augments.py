@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from exilesage.db import get_connection
+from exilesage.db import get_connection, sanitize_fts
 from exilesage.config import MAX_RESULTS
 
 log = logging.getLogger(__name__)
@@ -65,7 +65,9 @@ def _slot_clause(slot: str | None) -> tuple[str, list]:
 def _search_fts(conn, query: str, slot: str | None, limit: int):
     if not query or not query.strip():
         return []
-    fts_term = query.strip() + "*"
+    fts_term = sanitize_fts(query)
+    if not fts_term:
+        return []
     slot_sql, slot_params = _slot_clause(slot)
 
     base_sql = (

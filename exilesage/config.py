@@ -38,5 +38,7 @@ MODEL_MAP: dict[QueryType, str] = {
 
 # ── Advisor limits ────────────────────────────────────────────────────────────
 
-MAX_TOOL_ITER = 8    # max agentic loop iterations before forcing a final answer
-MAX_RESULTS   = 20   # max rows returned by any tool function
+MAX_TOOL_ITER        = 8     # max agentic loop iterations before forcing a final answer
+MAX_RESULTS          = 20    # max rows returned by any tool function
+MAX_ADVISOR_TOKENS   = 4096  # max output tokens for advisor responses
+MAX_CLASSIFIER_TOKENS = 16   # max output tokens for query classifier

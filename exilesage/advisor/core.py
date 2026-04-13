@@ -40,6 +40,8 @@ from exilesage.config import (  # noqa: E402
     MODEL_MAP,
     ROUTER_MODEL,
     MAX_TOOL_ITER,
+    MAX_ADVISOR_TOKENS,
+    MAX_CLASSIFIER_TOKENS,
     QueryType,
 )
 from exilesage.advisor.system_prompt import SYSTEM_PROMPT  # noqa: E402
@@ -76,7 +78,7 @@ def classify_query(question: str) -> QueryType:
         client = anthropic.Anthropic()
         resp = client.messages.create(
             model=ROUTER_MODEL,
-            max_tokens=16,
+            max_tokens=MAX_CLASSIFIER_TOKENS,
             system=_CLASSIFIER_SYSTEM,
             messages=[{"role": "user", "content": question}],
         )
@@ -170,7 +172,7 @@ def ask(question: str, query_type: QueryType | None = None) -> str:
         log.debug("ask: iteration %d/%d", iteration + 1, MAX_TOOL_ITER)
         response = client.messages.create(
             model=model,
-            max_tokens=4096,
+            max_tokens=MAX_ADVISOR_TOKENS,
             system=SYSTEM_PROMPT,
             tools=TOOL_DEFINITIONS,
             tool_choice={"type": "auto"},

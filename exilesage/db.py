@@ -1,5 +1,6 @@
 """SQLite connection and schema management."""
 
+import re
 import sqlite3
 import logging
 from pathlib import Path
@@ -16,6 +17,21 @@ def get_connection(db_path=None) -> sqlite3.Connection:
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA foreign_keys=ON")
     return conn
+
+
+_FTS_SPECIAL = re.compile(r'[+\-*"(){}[\]^~:@#]')
+
+
+def sanitize_fts(query: str) -> str:
+    """Sanitize a query string for FTS5 MATCH.
+
+    Strips FTS5 operators (+, -, *, ", etc.) that would cause syntax errors,
+    then appends * for prefix matching. Returns empty string if nothing remains.
+    """
+    cleaned = _FTS_SPECIAL.sub(" ", query).strip()
+    if not cleaned:
+        return ""
+    return cleaned + "*"
 
 
 def init_db() -> None:

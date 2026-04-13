@@ -118,7 +118,7 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
 
     # Insert all rows in one batch
     if rows_to_insert:
-        with get_connection() as conn:
+        with get_connection(db_path) as conn:
             cursor = conn.cursor()
             cursor.executemany(
                 """

@@ -412,3 +412,73 @@ def test_search_augments_no_wiki_markup():
         assert "[" not in tn or "|" not in tn, (
             f"Wiki markup found in type_name: {tn}"
         )
+
+
+# ── FTS5 input sanitization (C1 regression) ─────────────────────────────────
+
+def test_fts_plus_sign_does_not_crash():
+    """Regression C1: '+1 to all spell skills' crashed FTS5."""
+    results = search_mods(query="+1 spell skills", limit=5)
+    assert isinstance(results, list)  # must not crash
+
+def test_fts_hyphen_does_not_crash():
+    """Regression C1: 'cold-damage' crashed FTS5."""
+    results = search_mods(query="cold-damage", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_quotes_do_not_crash():
+    results = search_mods(query='"fire damage"', limit=5)
+    assert isinstance(results, list)
+
+def test_fts_parentheses_do_not_crash():
+    results = search_base_items(query="(wand)", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_asterisk_in_query():
+    results = search_currencies(query="chaos*", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_all_special_chars():
+    """Query made entirely of special chars should return empty, not crash."""
+    results = search_mods(query="+-*\"()[]", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_mixed_special_and_text():
+    """Special chars mixed with real words should still find results."""
+    results = search_mods(query="+fire", limit=5)
+    assert isinstance(results, list)
+    # 'fire' should still match after stripping '+'
+    assert len(results) > 0, "+fire should find results after sanitization"
+
+def test_fts_sanitization_items():
+    results = search_base_items(query="+iron -steel", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_sanitization_currencies():
+    results = search_currencies(query="orb (of)", limit=5)
+    assert isinstance(results, list)
+
+def test_fts_sanitization_augments():
+    results = search_augments(query="soul+core", limit=5)
+    assert isinstance(results, list)
+
+
+# ── Currency wiki markup (C2 regression) ─────────────────────────────────────
+
+def test_currency_descriptions_no_wiki_markup():
+    """Regression C2: currency descriptions had [Key|Display] markup."""
+    from exilesage.db import get_connection
+    conn = get_connection()
+    rows = conn.execute(
+        "SELECT COUNT(*) FROM currencies WHERE description LIKE '%[%|%]%'"
+    ).fetchone()
+    conn.close()
+    assert rows[0] == 0, f"{rows[0]} currencies still have wiki markup in description"
+
+def test_chaos_orb_description_clean():
+    """Regression C2: Chaos Orb description should say 'Rare' not '[ItemRarity|Rare]'."""
+    results = search_currencies(query="Chaos Orb", limit=1)
+    assert len(results) > 0
+    desc = results[0].get("description", "")
+    assert "[" not in desc, f"Wiki markup in Chaos Orb description: {desc}"
+    assert "Rare" in desc, "Chaos Orb description should mention 'Rare'"

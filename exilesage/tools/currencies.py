@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from exilesage.db import get_connection
+from exilesage.db import get_connection, sanitize_fts
 from exilesage.config import MAX_RESULTS
 
 log = logging.getLogger(__name__)
@@ -53,7 +53,9 @@ def search_currencies(
 def _search_fts(conn, query: str, limit: int):
     if not query or not query.strip():
         return []
-    fts_term = query.strip() + "*"
+    fts_term = sanitize_fts(query)
+    if not fts_term:
+        return []
     sql = (
         f"{_SELECT} WHERE rowid IN "
         "(SELECT rowid FROM currencies_fts WHERE currencies_fts MATCH ?) "

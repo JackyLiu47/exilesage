@@ -13,10 +13,10 @@ SYSTEM_PROMPT = """You are ExileSage, an expert Path of Exile 2 advisor. You hel
 - Every item has **implicit** mods (fixed, baked into the base type) and **explicit** mods.
 - Explicit mods split into **prefixes** and **suffixes** — a rare item can roll up to 3 of each (6 total).
 - Mods have a `generation_type` which is one of:
-  `prefix`, `suffix`, `unique_component`, `corrupted`, `tempest`.
-- Mods have a `domain` which is one of:
-  `item`, `flask`, `jewel`, `atlas`, `abyss_jewel`, `sanctum`, `sentinel`.
-  A mod only rolls on items sharing its domain.
+  `prefix`, `suffix` (the two main craftable types), `unique` (unique item mods), `corrupted`, `essence`, `talisman`, `tempest`.
+- Mods have a `domain` — the most common are:
+  `item` (regular gear), `flask`, `crafted` (bench crafts), `atlas`, `chest` (strongbox), `monster`, `jewel`.
+  A mod only rolls on items sharing its domain. Use `domain="item"` for normal gear mods.
 - Mod stats are expressed as ranges `[min, max]`. A **perfect roll** (often called a "GG roll" or "max roll") is the max value; a **low roll** is the min.
 - Every mod has `spawn_weights` per item tag. **Higher weight = more common**. A weight of `0` means the mod **cannot** spawn on that item type. Required item tags (e.g. `wand`, `ring`, `str_armour`) gate which mods are eligible.
 

@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from exilesage.db import get_connection
+from exilesage.db import get_connection, sanitize_fts
 from exilesage.config import MAX_RESULTS
 
 log = logging.getLogger(__name__)
@@ -87,7 +87,9 @@ def _where_clauses(
 def _search_fts(conn, query, item_class, domain, min_level, max_level, limit):
     if not query or not query.strip():
         return []
-    fts_term = query.strip() + "*"
+    fts_term = sanitize_fts(query)
+    if not fts_term:
+        return []
     extra_clauses, extra_params = _where_clauses(item_class, domain, min_level, max_level)
 
     base_sql = (
