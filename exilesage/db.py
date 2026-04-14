@@ -1,12 +1,13 @@
 """SQLite connection and schema management."""
 
 import re
+import unicodedata
 import sqlite3
 import logging
 from pathlib import Path
 
 from exilesage import config  # module-level import; attribute access = call-time resolution
-from exilesage.config import SCHEMA_PATH
+from exilesage.config import SCHEMA_PATH, MAX_FTS_QUERY_LEN
 
 log = logging.getLogger(__name__)
 
@@ -28,6 +29,29 @@ def get_connection(db_path=None) -> sqlite3.Connection:
 _FTS_SPECIAL = re.compile(r"[^\w\s\u00C0-\uFFFF]")
 _FTS_KEYWORDS = re.compile(r'\b(AND|OR|NOT|NEAR)\b', re.IGNORECASE)
 
+# Unicode categories to strip even though they pass the whitelist (U+00C0-FFFF).
+# Cc = control, Cf = format (BOM, RTL overrides), Cs = surrogates, Co = private use,
+# Cn = unassigned. Also strip Po/Pi/Pf/Ps/Pe in the general-punctuation (U+2000-2FFF)
+# and fullwidth-forms (U+FF00-FFEF) blocks.
+_BAD_UNICODE_CATS = frozenset({"Cc", "Cf", "Cs", "Co", "Cn"})
+_PUNCT_CATS = frozenset({"Po", "Pi", "Pf", "Ps", "Pe"})
+_PUNCT_RANGES = (range(0x2000, 0x3000), range(0xFF00, 0xFFF0))
+
+
+def _strip_bad_unicode(s: str) -> str:
+    """Remove Unicode code points that pass the whitelist but are unsafe for FTS5."""
+    out = []
+    for ch in s:
+        cp = ord(ch)
+        cat = unicodedata.category(ch)
+        if cat in _BAD_UNICODE_CATS:
+            out.append(" ")
+        elif cat in _PUNCT_CATS and any(cp in r for r in _PUNCT_RANGES):
+            out.append(" ")
+        else:
+            out.append(ch)
+    return "".join(out)
+
 
 def sanitize_fts(query: str) -> str:
     """Sanitize a query string for FTS5 MATCH.
@@ -35,11 +59,38 @@ def sanitize_fts(query: str) -> str:
     Strips FTS5 operators (+, -, *, ", etc.) and boolean keywords (AND, OR,
     NOT, NEAR) that would alter query semantics, then appends * for prefix
     matching. Returns empty string if nothing remains.
+
+    Unicode hardening (in order):
+    1. Pre-truncate to 4 * MAX_FTS_QUERY_LEN (1024) chars — caps CPU before
+       any per-char work, preventing DoS via adversarial large inputs.
+    2. NFC normalize — merges combining marks (e.g. NFD copy-paste from wiki)
+       so 'é' (e + U+0301) becomes U+00E9 and matches NFC-stored data.
+    3. Lone surrogates are purged via encode/decode roundtrip.
+    4. Control/format/private-use code points and punctuation in the
+       general-punctuation (U+2000-2FFF) and fullwidth-forms (U+FF00-FFEF)
+       blocks are replaced with spaces.
+    5. ASCII-special whitelist regex removes FTS5 syntax chars.
+    6. Boolean keyword (AND/OR/NOT/NEAR) strip.
+    7. Final length cap at MAX_FTS_QUERY_LEN (256) chars (head preserved).
+    8. Append * for prefix matching.
     """
+    # 1. Pre-truncate — cap raw input BEFORE any per-char processing.
+    query = query[: 4 * MAX_FTS_QUERY_LEN]
+    # 2. NFC normalize — merges NFD combining marks into single codepoints.
+    query = unicodedata.normalize("NFC", query)
+    # 3. Purge lone surrogates — they crash at SQLite bind.
+    query = query.encode("utf-8", errors="ignore").decode("utf-8")
+    # 4. Strip known-bad Unicode categories / ranges.
+    query = _strip_bad_unicode(query)
+    # 5. Apply the ASCII-special whitelist regex.
     cleaned = _FTS_SPECIAL.sub(" ", query)
+    # 6. Strip FTS5 boolean keywords.
     cleaned = _FTS_KEYWORDS.sub(" ", cleaned).strip()
     if not cleaned:
         return ""
+    # 7. Final length cap — truncate BEFORE appending *.
+    cleaned = cleaned[:MAX_FTS_QUERY_LEN]
+    # 8. Append * for prefix matching.
     return cleaned + "*"
 
 
@@ -93,13 +144,32 @@ def _apply_migrations(conn: sqlite3.Connection) -> None:
     """Run any pending schema migrations based on schema_version in meta.
 
     Does **not** commit — caller owns transaction boundary (init_db via ``with conn:``).
+
+    Guards:
+    - Missing meta row: logs a warning and returns (fresh DB, ingest.py creates the row).
+    - NULL schema_version: raises RuntimeError (corrupt DB).
+    - schema_version > CURRENT_SCHEMA_VERSION: raises RuntimeError (DB from the future).
     """
     row = conn.execute(
         "SELECT schema_version FROM meta WHERE id = 1"
     ).fetchone()
     if row is None:
-        return  # meta row not yet created (ingest.py creates it)
-    current = row[0] if row[0] is not None else 1
+        log.warning(
+            "meta row not yet created; skipping migrations "
+            "(expected on fresh DB before first ingest)"
+        )
+        return
+    if row[0] is None:
+        raise RuntimeError(
+            "meta.schema_version is NULL — DB may be corrupt; "
+            "set it explicitly to recover"
+        )
+    current = row[0]
+    if current > CURRENT_SCHEMA_VERSION:
+        raise RuntimeError(
+            f"DB schema_version {current} is newer than code supports "
+            f"({CURRENT_SCHEMA_VERSION}); refusing to open"
+        )
     for version, sql in _MIGRATIONS:
         if current < version:
             log.info("Applying migration to schema v%d", version)

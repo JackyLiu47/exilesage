@@ -1032,3 +1032,213 @@ class TestImportPhases:
         assert len(phase2_called) == 0, (
             "Phase 2 importer was called despite phase 1 failure — abort logic missing"
         )
+
+
+# ---------------------------------------------------------------------------
+# Fix 2: _safe_replace_table — BaseException / KeyboardInterrupt rollback
+# ---------------------------------------------------------------------------
+
+class _ConnProxy:
+    """Thin proxy around sqlite3.Connection that allows overriding executemany/commit."""
+
+    def __init__(self, conn, executemany_override=None, commit_override=None):
+        self._conn = conn
+        self._executemany_override = executemany_override
+        self._commit_override = commit_override
+
+    def executemany(self, sql, params):
+        if self._executemany_override is not None:
+            return self._executemany_override(sql, params)
+        return self._conn.executemany(sql, params)
+
+    def commit(self):
+        if self._commit_override is not None:
+            return self._commit_override()
+        return self._conn.commit()
+
+    def rollback(self):
+        return self._conn.rollback()
+
+    def execute(self, sql, params=()):
+        return self._conn.execute(sql, params)
+
+    @property
+    def in_transaction(self):
+        return self._conn.in_transaction
+
+    def close(self):
+        return self._conn.close()
+
+
+class TestInterruptSafety:
+    """Fix 2: BaseException handling in _safe_replace_table.
+
+    Ctrl-C (KeyboardInterrupt) mid-executemany must still rollback and restore FK.
+    RED tests first — fail before BaseException handler is added.
+    """
+
+    def test_keyboard_interrupt_rolls_back(self, tmp_db):
+        """KeyboardInterrupt mid-executemany rolls back — original data survives."""
+        # Pre-populate with known data
+        _insert_parent_rows(tmp_db, [("orig1", "original")])
+        original_count = tmp_db.execute("SELECT COUNT(*) FROM parent").fetchone()[0]
+        assert original_count == 1
+
+        def _interrupt_executemany(sql, params):
+            raise KeyboardInterrupt("simulated Ctrl-C")
+
+        proxy = _ConnProxy(tmp_db, executemany_override=_interrupt_executemany)
+
+        with pytest.raises(KeyboardInterrupt):
+            _safe_replace_table(proxy, "parent", INSERT_SQL, [("new1", "new")])
+
+        # Original data must survive (rollback happened)
+        count = tmp_db.execute("SELECT COUNT(*) FROM parent").fetchone()[0]
+        assert count == 1, f"Rollback failed after KeyboardInterrupt — got {count} rows"
+        assert not tmp_db.in_transaction, "Connection still in transaction after KI rollback"
+
+    def test_keyboard_interrupt_restores_fk(self, tmp_db):
+        """After KeyboardInterrupt, PRAGMA foreign_keys must be restored to ON (=1)."""
+        def _interrupt_executemany(sql, params):
+            raise KeyboardInterrupt("simulated Ctrl-C")
+
+        proxy = _ConnProxy(tmp_db, executemany_override=_interrupt_executemany)
+
+        with pytest.raises(KeyboardInterrupt):
+            _safe_replace_table(proxy, "parent", INSERT_SQL, [("x", "y")])
+
+        fk_val = tmp_db.execute("PRAGMA foreign_keys").fetchone()[0]
+        assert fk_val == 1, f"foreign_keys not restored after KeyboardInterrupt (got {fk_val})"
+
+    def test_commit_failure_restores_fk(self, tmp_db):
+        """OperationalError from conn.commit() still restores FK enforcement."""
+        def _fail_commit():
+            raise sqlite3.OperationalError("injected commit failure")
+
+        proxy = _ConnProxy(tmp_db, commit_override=_fail_commit)
+
+        with pytest.raises(sqlite3.OperationalError):
+            _safe_replace_table(proxy, "parent", INSERT_SQL, [("x", "y")])
+
+        fk_val = tmp_db.execute("PRAGMA foreign_keys").fetchone()[0]
+        assert fk_val == 1, f"foreign_keys not restored after commit failure (got {fk_val})"
+
+    def test_keyboard_interrupt_preserves_original_when_rollback_fails(self, tmp_db):
+        """Fix C: KeyboardInterrupt propagates even when conn.rollback() raises.
+
+        Scenario: executemany raises KeyboardInterrupt AND rollback raises
+        OperationalError("broken"). The OperationalError must be swallowed so
+        the original KeyboardInterrupt propagates out to the caller.
+
+        RED: current impl calls conn.rollback() bare in the BaseException handler —
+        if rollback raises, the new exception replaces the original KI in __context__.
+        The bare `raise` then re-raises OperationalError, not KeyboardInterrupt.
+
+        GREEN: wrap rollback() in try/except Exception: pass so original KI propagates.
+        """
+        class _RollbackFailProxy(_ConnProxy):
+            """Proxy that also makes rollback() raise OperationalError."""
+            def rollback(self):
+                raise sqlite3.OperationalError("broken connection — rollback failed")
+
+        def _interrupt_executemany(sql, params):
+            raise KeyboardInterrupt("simulated Ctrl-C")
+
+        proxy = _RollbackFailProxy(tmp_db, executemany_override=_interrupt_executemany)
+
+        # The KeyboardInterrupt must propagate, NOT the OperationalError from rollback
+        with pytest.raises(KeyboardInterrupt):
+            _safe_replace_table(proxy, "parent", INSERT_SQL, [("new1", "new")])
+
+
+# ---------------------------------------------------------------------------
+# Coverage tests — no bug, gap closure
+# ---------------------------------------------------------------------------
+
+class TestCoverageGaps:
+    """Coverage tests for paths that work but lack explicit tests."""
+
+    def test_safe_replace_empty_rows_rebuilds_fts(self, tmp_db):
+        """rows=[] with fts_table set must rebuild FTS — COUNT(*) FROM parent_fts == 0."""
+        # Pre-populate
+        _insert_parent_rows(tmp_db, [("a", "alpha"), ("b", "beta")])
+
+        _safe_replace_table(
+            tmp_db, "parent", INSERT_SQL, [],
+            fts_table="parent_fts"
+        )
+
+        count = tmp_db.execute("SELECT COUNT(*) FROM parent_fts").fetchone()[0]
+        assert count == 0, f"FTS not empty after empty-rows replace: {count}"
+
+    def test_run_phases_empty_list(self):
+        """run_phases([]) returns (0, 0) without error."""
+        from pipeline.ingest import run_phases
+        result = run_phases([])
+        assert result == (0, 0)
+
+    def test_run_phases_empty_inner_phase(self):
+        """run_phases([[]]) — empty phase — returns (0, 0) without error."""
+        from pipeline.ingest import run_phases
+        result = run_phases([[]])
+        assert result == (0, 0)
+
+    def test_run_phases_partial_phase_failure_exit_code(self):
+        """Two importers in one phase, one raises → SystemExit(1); successful importer counted."""
+        from pipeline.ingest import run_phases
+        import types
+
+        imported_tracker = []
+
+        def _good_run():
+            imported_tracker.append(5)
+            return (5, 0)
+
+        def _bad_run():
+            raise RuntimeError("injected failure")
+
+        good_mod = types.SimpleNamespace(run=_good_run)
+        bad_mod = types.SimpleNamespace(run=_bad_run)
+
+        with pytest.raises(SystemExit) as exc_info:
+            run_phases([[("good", good_mod), ("bad", bad_mod)]])
+
+        assert exc_info.value.code == 1
+        assert imported_tracker == [5], "Good importer must still have run before bad one"
+
+    def test_importer_skipped_rows_fts_consistent(
+        self, tmp_db_with_schema, mods_dir_v1, monkeypatch
+    ):
+        """3-row mods JSON where 1 row fails validation → mods_fts COUNT(*) == 2."""
+        conn, db_path = tmp_db_with_schema
+        import pipeline.importers.mods_importer as mi
+
+        # Build a mods file with 3 rows but corrupt the third (missing required id)
+        bad_mods = dict(_MODS_V1)  # 3 rows
+        # Inject a 4th entry that will fail validation (id is missing — pydantic will reject)
+        bad_mods["BadMod"] = {
+            "id": None,  # id is required str; None should cause validation to fail → skip
+            "name": "Bad Mod",
+            "generation_type": "suffix",
+            "domain": "item",
+            "group": None,
+            "type": "Strength",
+            "required_level": 1,
+            "is_essence_only": False,
+            "tags": [], "spawn_weights": [], "generation_weights": [],
+            "grants_effects": [], "stats": [], "adds_tags": [], "implicit_tags": [],
+        }
+        # Overwrite the mods dir with the bad file
+        import json as _json
+        mods_dir_v1.joinpath("mods.json").write_text(
+            _json.dumps(bad_mods), encoding="utf-8"
+        )
+
+        monkeypatch.setattr(mi, "PROCESSED_DIR", mods_dir_v1)
+        imported, skipped = mi.run(db_path=db_path)
+
+        fts_count = conn.execute("SELECT COUNT(*) FROM mods_fts").fetchone()[0]
+        assert fts_count == imported, (
+            f"mods_fts count ({fts_count}) does not match imported ({imported})"
+        )
+        assert imported <= 3, "Should not import more rows than the valid 3"

@@ -42,3 +42,4 @@ MAX_TOOL_ITER        = 8     # max agentic loop iterations before forcing a fina
 MAX_RESULTS          = 20    # max rows returned by any tool function
 MAX_ADVISOR_TOKENS   = 4096  # max output tokens for advisor responses
 MAX_CLASSIFIER_TOKENS = 16   # max output tokens for query classifier
+MAX_FTS_QUERY_LEN    = 256   # max chars in sanitized FTS query (before appending *)

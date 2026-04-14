@@ -871,6 +871,164 @@ class TestMigrationIdempotency:
         )
 
 
+class TestFTSUnicodeHardening:
+    """Fix 1: sanitize_fts Unicode hardening — RED tests for edge-case inputs."""
+
+    def test_fullwidth_apostrophe_stripped(self):
+        """U+FF07 FULLWIDTH APOSTROPHE must be stripped from output."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("\uFF07")
+        assert "\uFF07" not in out
+
+    def test_curly_quotes_stripped(self):
+        """U+2018/2019 LEFT/RIGHT SINGLE QUOTATION MARK and U+201C/201D must be stripped."""
+        from exilesage.db import sanitize_fts
+        for ch in ("\u2018", "\u2019", "\u201C", "\u201D"):
+            out = sanitize_fts(ch + "test")
+            assert ch not in out, f"Curly quote {ch!r} (U+{ord(ch):04X}) survived sanitize_fts"
+
+    def test_bom_stripped(self):
+        """U+FEFF BYTE ORDER MARK must be stripped."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("\uFEFF fire")
+        assert "\uFEFF" not in out
+
+    def test_rtl_override_stripped(self):
+        """U+202E RIGHT-TO-LEFT OVERRIDE must be stripped."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("\u202E fire")
+        assert "\u202E" not in out
+
+    def test_lone_surrogate_no_crash(self):
+        """sanitize_fts with lone surrogate must not raise; result is a string."""
+        from exilesage.db import sanitize_fts
+        # lone surrogate — would cause UnicodeEncodeError at SQLite bind without the fix
+        result = sanitize_fts("\uD800fire")
+        assert isinstance(result, str)
+        # Must not contain the surrogate
+        assert "\uD800" not in result
+
+    def test_length_capped_at_256(self):
+        """Output must be at most 257 chars (256 content + '*')."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("a" * 10000)
+        assert len(out) <= 257, f"sanitize_fts output too long: {len(out)}"
+
+    def test_length_cap_preserves_head(self):
+        """When truncated, the first 256 chars of cleaned input are kept (not the tail)."""
+        from exilesage.db import sanitize_fts
+        # 300 a's — head of cleaned content must survive, not tail
+        out = sanitize_fts("a" * 300)
+        # output is "aaa...a*" — all chars before * should be 'a', and there should be 256 of them
+        content = out.rstrip("*")
+        assert len(content) == 256, f"Expected 256 content chars, got {len(content)}"
+
+    def test_accented_letters_preserved(self):
+        """Latin-1 accented letters (e.g. café) must survive sanitize_fts."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("café")
+        assert "caf\u00E9" in out, f"'café' not preserved in output: {out!r}"
+
+    def test_cjk_preserved(self):
+        """CJK characters must survive sanitize_fts (category Lo — letters)."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("\u706B\u7403")  # 火球
+        assert "\u706B\u7403" in out, f"CJK '火球' not preserved in output: {out!r}"
+
+    def test_sanitize_fts_single_char(self):
+        """Single ASCII char must produce 'a*'."""
+        from exilesage.db import sanitize_fts
+        assert sanitize_fts("a") == "a*"
+
+    def test_sanitize_fts_fts5_column_syntax_stripped(self):
+        """Colon in 'name:fire' must be stripped (FTS5 column filter syntax)."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("name:fire")
+        assert ":" not in out, f"Colon survived sanitize_fts: {out!r}"
+
+
+class TestApplyMigrations:
+    """Fix 3-5: _apply_migrations edge-case guards."""
+
+    def test_apply_migrations_rejects_future_schema(self, tmp_path, monkeypatch):
+        """DB with schema_version > CURRENT_SCHEMA_VERSION must raise RuntimeError."""
+        import sqlite3
+        from exilesage import config, db
+
+        tmp_db = tmp_path / "future.db"
+        monkeypatch.setattr(config, "DB_PATH", tmp_db)
+
+        # Create a minimal schema with a future version
+        conn = sqlite3.connect(str(tmp_db))
+        conn.executescript("""
+            CREATE TABLE meta (
+                id INTEGER PRIMARY KEY CHECK (id = 1),
+                patch_version TEXT NOT NULL DEFAULT 'unknown',
+                last_import_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                schema_version INTEGER NOT NULL DEFAULT 1
+            );
+            INSERT INTO meta (id, schema_version) VALUES (1, 999);
+        """)
+        conn.commit()
+        conn.close()
+
+        with pytest.raises(RuntimeError, match="[Nn]ewer|schema_version.*999|refusing"):
+            db.init_db()
+
+    def test_apply_migrations_rejects_null_schema_version(self, tmp_path, monkeypatch):
+        """meta.schema_version = NULL must raise RuntimeError (corrupt DB guard)."""
+        import sqlite3
+        from exilesage import config, db
+
+        tmp_db = tmp_path / "null_ver.db"
+        monkeypatch.setattr(config, "DB_PATH", tmp_db)
+
+        conn = sqlite3.connect(str(tmp_db))
+        conn.executescript("""
+            CREATE TABLE meta (
+                id INTEGER PRIMARY KEY CHECK (id = 1),
+                patch_version TEXT NOT NULL DEFAULT 'unknown',
+                last_import_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                schema_version INTEGER
+            );
+            INSERT INTO meta (id, schema_version) VALUES (1, NULL);
+        """)
+        conn.commit()
+        conn.close()
+
+        with pytest.raises(RuntimeError, match="[Nn]ull|NULL|corrupt"):
+            db.init_db()
+
+    def test_apply_migrations_logs_when_meta_missing(self, tmp_path, monkeypatch, caplog):
+        """When meta row is absent, _apply_migrations must log a warning."""
+        import sqlite3
+        import logging
+        from exilesage import config, db
+
+        tmp_db = tmp_path / "no_meta.db"
+        monkeypatch.setattr(config, "DB_PATH", tmp_db)
+
+        # Create schema without a meta row
+        conn = sqlite3.connect(str(tmp_db))
+        conn.executescript("""
+            CREATE TABLE meta (
+                id INTEGER PRIMARY KEY CHECK (id = 1),
+                patch_version TEXT NOT NULL DEFAULT 'unknown',
+                last_import_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                schema_version INTEGER NOT NULL DEFAULT 1
+            );
+        """)
+        conn.commit()
+        conn.close()
+
+        with caplog.at_level(logging.WARNING, logger="exilesage.db"):
+            db._apply_migrations(db.get_connection(tmp_db))
+
+        assert any("meta" in r.message.lower() for r in caplog.records), (
+            "Expected a warning mentioning 'meta' when meta row is absent"
+        )
+
+
 class TestFTSIntegration:
     """Integration tests against the real exilesage.db (read-only).
 
@@ -917,3 +1075,114 @@ class TestFTSIntegration:
         results = search_mods(query="fire")
         assert isinstance(results, list)
         assert len(results) > 0, "Normal 'fire' query returned no results after fix"
+
+
+# ---------------------------------------------------------------------------
+# Fix A + B: Pre-truncate DoS prevention and NFC normalization
+# ---------------------------------------------------------------------------
+
+class TestFTSDoSAndNFC:
+    """Fix A: pre-truncate raw input before per-char work (DoS prevention).
+    Fix B: NFC normalize after pre-truncate to handle copy-paste NFD strings.
+    """
+
+    def test_sanitize_fts_pretruncates_dos_input(self):
+        """1M-char input must complete in < 50ms (pre-truncate guard).
+
+        RED: current impl runs _strip_bad_unicode on the full 1M chars
+        (~200ms on Windows) before the length cap.
+        GREEN: pre-truncate to 4 * MAX_FTS_QUERY_LEN = 1024 chars first.
+        """
+        import time
+        from exilesage.db import sanitize_fts
+
+        big_input = "a" * 1_000_000
+        t0 = time.perf_counter()
+        result = sanitize_fts(big_input)
+        elapsed_ms = (time.perf_counter() - t0) * 1000
+
+        assert elapsed_ms < 50, (
+            f"sanitize_fts took {elapsed_ms:.1f}ms on 1M-char input — "
+            f"pre-truncate missing (cap raw input to 1024 chars at entry)"
+        )
+        # Output must still be valid: capped content + '*'
+        assert result.endswith("*")
+        content = result[:-1]
+        assert len(content) <= 256, f"Content exceeds MAX_FTS_QUERY_LEN: {len(content)}"
+
+    def test_sanitize_fts_nfc_normalizes(self):
+        """NFD 'Re\\u0301sistance' must be NFC-normalized to 'Résistance' (U+00E9).
+
+        RED: current impl skips NFC normalize, so the combining acute (U+0301)
+        may survive into FTS and not match NFC-stored data.
+        GREEN: unicodedata.normalize('NFC', query) right after pre-truncate.
+        """
+        from exilesage.db import sanitize_fts
+
+        # NFD: 'e' (U+0065) + combining acute (U+0301) = 2 codepoints
+        nfd_input = "Re\u0301sistance"
+        out = sanitize_fts(nfd_input)
+
+        # NFC: 'é' = U+00E9 (single codepoint)
+        assert "\u00E9" in out, (
+            f"NFC normalization missing — U+00E9 not in output {out!r}. "
+            f"Input was NFD 'Re\\u0301sistance'; expected 'Résistance' in output."
+        )
+        # The combining mark must NOT survive as a bare codepoint
+        assert "\u0301" not in out, (
+            f"Combining acute U+0301 survived in output {out!r} — NFC normalize missing"
+        )
+
+    def test_sanitize_fts_nfc_already_normalized(self):
+        """NFC input 'Résistance' (U+00E9) must produce the same output as NFD input.
+
+        Idempotency: NFC-normalize of already-NFC input is unchanged.
+        """
+        from exilesage.db import sanitize_fts
+
+        nfc_input = "R\u00E9sistance"  # already NFC
+        out = sanitize_fts(nfc_input)
+
+        assert "\u00E9" in out, (
+            f"NFC 'Résistance' lost U+00E9 in output {out!r}"
+        )
+        assert out.endswith("*")
+
+    # Coverage additions — expected to pass against fixed code
+
+    def test_sanitize_fts_lone_surrogate_explicit(self):
+        """\\uD800 prepended to 'hello' must yield 'hello*', no exception.
+
+        Executes the encode-decode roundtrip path: lone surrogate purged,
+        remaining text passes through cleanly.
+        """
+        from exilesage.db import sanitize_fts
+
+        result = sanitize_fts("\ud800hello")
+        assert result == "hello*", (
+            f"Expected 'hello*' after lone-surrogate purge, got {result!r}"
+        )
+
+    def test_sanitize_fts_nbsp_and_ideographic_space(self):
+        """U+00A0 (NBSP) and U+3000 (ideographic space) survive as whitespace.
+
+        Both have Unicode category Zs. _strip_bad_unicode does not strip Zs.
+        _FTS_SPECIAL regex uses \\s which (with re.UNICODE) matches both,
+        so they're treated as word separators — neither appears literally in
+        the stripped output, but they're also not harmful to FTS5.
+
+        Decision: preserve them as whitespace (they become spaces after regex
+        sub). The test just confirms no crash and valid output format.
+        """
+        from exilesage.db import sanitize_fts
+
+        # NBSP before 'fire', ideographic space before 'cold'
+        result_nbsp = sanitize_fts("\u00A0fire")
+        result_ideo = sanitize_fts("\u3000cold")
+
+        # Both should return valid sanitized strings ending in '*'
+        assert result_nbsp.endswith("*"), f"NBSP result missing '*': {result_nbsp!r}"
+        assert result_ideo.endswith("*"), f"Ideographic-space result missing '*': {result_ideo!r}"
+        # The meaningful text must survive
+        assert "fire" in result_nbsp, f"'fire' lost in NBSP test: {result_nbsp!r}"
+        assert "cold" in result_ideo, f"'cold' lost in ideo-space test: {result_ideo!r}"

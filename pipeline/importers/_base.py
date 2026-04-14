@@ -136,7 +136,18 @@ def _safe_replace_table(
             log.warning("FK violation in %s — transaction rolled back", table)
             raise
         except Exception:
+            # Common path: sqlite3 errors, ValueError, etc.
             conn.rollback()
+            raise
+        except BaseException:
+            # Uncommon path: KeyboardInterrupt, SystemExit, etc.
+            # rollback() is best-effort — if it raises (broken connection,
+            # disk full), swallow that secondary exception so the original
+            # BaseException (e.g. KeyboardInterrupt) propagates unmasked.
+            try:
+                conn.rollback()
+            except Exception:
+                pass
             raise
 
     finally:
