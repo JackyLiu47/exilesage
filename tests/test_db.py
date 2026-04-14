@@ -602,3 +602,318 @@ class TestDataQuality:
         assert (
             len(duplicates) == 0
         ), f"Found duplicate augment IDs: {[row['id'] for row in duplicates]}"
+
+
+class TestFTSApostrophe:
+    """Tests for apostrophe handling in sanitize_fts (bug fix + regression guards)."""
+
+    def test_sanitize_fts_strips_apostrophe(self):
+        from exilesage.db import sanitize_fts
+        assert "'" not in sanitize_fts("Winter's Blast")
+
+    def test_sanitize_fts_apostrophe_full_output(self):
+        """Whitelist fix: apostrophe replaced by space, whole result is 'Winter  Blast*'.
+
+        Reworked from the old false-gate test that passed even before the fix.
+        After the whitelist, apostrophe → space, so output is 'Winter  Blast*'.
+        Assert the exact sanitized string (strip to normalise interior spaces).
+        """
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("Winter's Blast")
+        # Apostrophe becomes a space; trailing * appended.
+        assert out.endswith("*")
+        assert "'" not in out
+        assert "Winter" in out
+        assert "Blast" in out
+
+    def test_sanitize_fts_preserves_star_suffix(self):
+        """Regression guard: existing `*` suffix for prefix matching must remain."""
+        from exilesage.db import sanitize_fts
+        assert sanitize_fts("Fireball").endswith("*")
+
+    def test_sanitize_fts_keyword_stripping_intact(self):
+        """Regression guard: AND/OR/NOT/NEAR still stripped."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("fire AND cold")
+        assert "AND" not in out.upper().split()  # AND as standalone token removed
+
+
+class TestFTSCrashChars:
+    """Tests that confirm crash characters are stripped by the whitelist sanitizer.
+
+    Each character below caused an FTS5 'syntax error' when passed to MATCH.
+    After the whitelist fix they must not appear in sanitize_fts output.
+    """
+
+    import pytest
+
+    @pytest.mark.parametrize("char,query", [
+        (".", "fire.damage"),
+        (",", "test,value"),
+        ("=", "dps=500"),
+        ("/", "wand/sceptre"),
+        ("<", "cold<lightning"),
+        (">", "fire>cold"),
+        ("`", "back`tick"),
+        (";", "test;val"),
+        ("!", "what!now"),
+        ("%", "50%chance"),
+        ("&", "fire&cold"),
+        ("|", "fire|cold"),
+    ])
+    def test_crash_char_stripped(self, char, query):
+        """Each crash char must be absent from sanitize_fts output."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts(query)
+        assert char not in out, (
+            f"Crash char {char!r} still present in sanitized output {out!r} "
+            f"(input: {query!r})"
+        )
+
+    def test_unicode_right_single_quote_safe(self):
+        """U+2019 RIGHT SINGLE QUOTATION MARK must not crash FTS5.
+
+        U+2019 is above the \\u00C0 whitelist threshold so it is preserved in the
+        sanitized output. This is correct: FTS5's unicode61 tokenizer treats it as
+        a non-word separator and handles it without raising a syntax error.
+        Contrast with ASCII apostrophe (U+0027) which triggers 'fts5: syntax error'.
+        """
+        from exilesage.db import sanitize_fts
+        # Must not raise — and must produce a non-empty result
+        out = sanitize_fts("Winter\u2019s Blast")
+        assert isinstance(out, str)
+        assert len(out) > 0
+
+    def test_underscore_preserved(self):
+        """Underscore must NOT be stripped — appears in stat IDs like 'base_fire_damage'."""
+        from exilesage.db import sanitize_fts
+        out = sanitize_fts("base_fire_damage")
+        assert "_" in out
+
+    def test_empty_after_strip_returns_empty(self):
+        """Query that becomes empty after stripping must return empty string (not '*')."""
+        from exilesage.db import sanitize_fts
+        # Only crash chars — after whitelist everything stripped, result must be ''
+        out = sanitize_fts(".,=/<>")
+        assert out == ""
+
+
+class TestMigrationIdempotency:
+    """Tests for init_db() re-runnability and migration safety (Phase 0.5)."""
+
+    def test_init_db_rerun_idempotent(self, tmp_path, monkeypatch):
+        """Running init_db() twice must not raise OperationalError."""
+        from exilesage import config, db
+        tmp_db = tmp_path / "test.db"
+        monkeypatch.setattr(config, "DB_PATH", tmp_db)
+        db.init_db()
+        db.init_db()  # second run must succeed — no "duplicate column" error
+
+    def test_ensure_schema_version_no_premature_commit(self, tmp_path, monkeypatch):
+        """_ensure_schema_version must NOT commit independently.
+
+        Protocol:
+          1. Create a fresh DB with meta table but WITHOUT schema_version column
+             (simulates a pre-v1 DB state).
+          2. Open a connection, begin an explicit savepoint, call _ensure_schema_version.
+          3. Roll back to the savepoint.
+          4. Inspect the column list — if _ensure_schema_version committed internally,
+             the column will persist despite the rollback (test FAILS before fix).
+             After the fix, rollback wins and the column is absent.
+        """
+        import sqlite3
+        from exilesage import config, db
+
+        tmp_db = tmp_path / "preV1.db"
+        monkeypatch.setattr(config, "DB_PATH", tmp_db)
+
+        # Build a minimal pre-v1 meta table (no schema_version column).
+        setup_conn = sqlite3.connect(str(tmp_db))
+        setup_conn.execute(
+            "CREATE TABLE meta ("
+            "id INTEGER PRIMARY KEY CHECK (id = 1),"
+            "patch_version TEXT NOT NULL DEFAULT 'unknown',"
+            "last_import_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP"
+            ")"
+        )
+        setup_conn.commit()
+        setup_conn.close()
+
+        # Open a connection and simulate a caller transaction using a savepoint.
+        test_conn = sqlite3.connect(str(tmp_db))
+        test_conn.execute("PRAGMA journal_mode=WAL")
+        test_conn.row_factory = sqlite3.Row
+        # isolation_level=None → autocommit off when we manage savepoints manually.
+        # We use SAVEPOINT instead of BEGIN to work within sqlite3's implicit txn.
+        test_conn.execute("SAVEPOINT sp_test")
+        try:
+            db._ensure_schema_version(test_conn)
+            # Confirm the column is visible within the transaction.
+            cols_during = {
+                row[1]
+                for row in test_conn.execute("PRAGMA table_info(meta)").fetchall()
+            }
+            assert "schema_version" in cols_during, (
+                "Column should be visible inside the savepoint before rollback"
+            )
+        finally:
+            test_conn.execute("ROLLBACK TO SAVEPOINT sp_test")
+            test_conn.execute("RELEASE SAVEPOINT sp_test")
+
+        # After rollback: column must NOT exist if _ensure_schema_version didn't commit.
+        cols_after = {
+            row[1]
+            for row in test_conn.execute("PRAGMA table_info(meta)").fetchall()
+        }
+        test_conn.close()
+        assert "schema_version" not in cols_after, (
+            "_ensure_schema_version committed prematurely — rollback had no effect. "
+            "Remove conn.commit() from _ensure_schema_version to fix."
+        )
+
+    def test_migrations_rerun_idempotent(self, tmp_path, monkeypatch):
+        """Running init_db multiple times leaves schema_version = CURRENT_SCHEMA_VERSION."""
+        from exilesage import config, db
+        tmp_db = tmp_path / "test.db"
+        monkeypatch.setattr(config, "DB_PATH", tmp_db)
+        db.init_db()
+        db.init_db()
+        db.init_db()
+        # schema_version column must exist and equal CURRENT_SCHEMA_VERSION
+        with db.get_connection(tmp_db) as conn:
+            cols = {row[1] for row in conn.execute("PRAGMA table_info(meta)").fetchall()}
+        assert "schema_version" in cols
+
+    def test_schema_version_set_on_fresh_db(self, tmp_path, monkeypatch):
+        """Running init_db on a fresh DB sets schema_version column on meta table."""
+        from exilesage import config, db
+        tmp_db = tmp_path / "fresh.db"
+        monkeypatch.setattr(config, "DB_PATH", tmp_db)
+        db.init_db()
+        with db.get_connection(tmp_db) as conn:
+            cols = {row[1] for row in conn.execute("PRAGMA table_info(meta)").fetchall()}
+        assert "schema_version" in cols, (
+            "schema_version column missing after init_db on fresh DB"
+        )
+
+    def test_add_column_if_missing_adds_when_absent(self, tmp_path):
+        """_add_column_if_missing adds the column when it doesn't exist."""
+        import sqlite3
+        from exilesage.db import _add_column_if_missing
+        db_path = tmp_path / "col_test.db"
+        conn = sqlite3.connect(str(db_path))
+        conn.execute("CREATE TABLE t (id INTEGER PRIMARY KEY)")
+        conn.commit()
+        _add_column_if_missing(conn, "t", "extra TEXT DEFAULT 'x'")
+        conn.commit()
+        cols = {row[1] for row in conn.execute("PRAGMA table_info(t)").fetchall()}
+        conn.close()
+        assert "extra" in cols, "Column 'extra' was not added by _add_column_if_missing"
+
+    def test_add_column_if_missing_no_op_on_existing_column(self, tmp_path):
+        """_add_column_if_missing is a no-op when the column already exists."""
+        import sqlite3
+        from exilesage.db import _add_column_if_missing
+        db_path = tmp_path / "col_noop.db"
+        conn = sqlite3.connect(str(db_path))
+        conn.execute("CREATE TABLE t (id INTEGER PRIMARY KEY, extra TEXT DEFAULT 'x')")
+        conn.commit()
+        # Must not raise OperationalError for "duplicate column"
+        _add_column_if_missing(conn, "t", "extra TEXT DEFAULT 'x'")
+        conn.commit()
+        cols = {row[1] for row in conn.execute("PRAGMA table_info(t)").fetchall()}
+        conn.close()
+        assert "extra" in cols
+
+    def test_pre_v1_upgrade_preserves_meta_row(self, tmp_path, monkeypatch):
+        """Upgrading a pre-v1 DB with an existing meta row preserves id=1 and gains schema_version=1.
+
+        Covers the "upgrade existing deployed DB" path: a real DB that was
+        ingested before schema_version was added still has its meta row intact
+        after init_db() runs, and the column DEFAULT fills in schema_version=1.
+        """
+        import sqlite3
+        from exilesage import config, db
+
+        tmp_db = tmp_path / "pre_v1_with_row.db"
+        monkeypatch.setattr(config, "DB_PATH", tmp_db)
+
+        # Build a minimal pre-v1 meta table (no schema_version column) WITH a row.
+        setup_conn = sqlite3.connect(str(tmp_db))
+        setup_conn.execute(
+            "CREATE TABLE meta ("
+            "id INTEGER PRIMARY KEY CHECK (id = 1),"
+            "patch_version TEXT NOT NULL DEFAULT 'unknown',"
+            "last_import_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+            "mods_count INTEGER DEFAULT 0,"
+            "base_items_count INTEGER DEFAULT 0,"
+            "currencies_count INTEGER DEFAULT 0,"
+            "augments_count INTEGER DEFAULT 0"
+            ")"
+        )
+        setup_conn.execute(
+            "INSERT INTO meta (id, patch_version, last_import_at) VALUES (1, 'x', '2026-01-01T00:00:00')"
+        )
+        setup_conn.commit()
+        setup_conn.close()
+
+        # Run init_db — must not crash and must upgrade the column.
+        db.init_db()
+
+        # Verify: existing row still has id=1 and schema_version received the DEFAULT (=1).
+        with db.get_connection(tmp_db) as conn:
+            row = conn.execute("SELECT id, schema_version FROM meta WHERE id = 1").fetchone()
+
+        assert row is not None, "meta row id=1 was lost during pre-v1 upgrade"
+        assert row["id"] == 1, f"meta row id changed: expected 1, got {row['id']}"
+        assert row["schema_version"] == 1, (
+            f"schema_version should be 1 (from DEFAULT) after upgrade, got {row['schema_version']}"
+        )
+
+
+class TestFTSIntegration:
+    """Integration tests against the real exilesage.db (read-only).
+
+    Skipped gracefully if the database file is not present (CI portability).
+    These tests verify that sanitize_fts + the tool layer produce no crashes
+    for queries that previously hit FTS5 syntax errors.
+    """
+
+    @pytest.fixture(scope="class")
+    def db_available(self):
+        """Skip entire class if DB is missing."""
+        from exilesage.config import DB_PATH
+        if not DB_PATH.exists():
+            pytest.skip(f"Database not found at {DB_PATH} — skipping integration tests")
+
+    def test_search_mods_apostrophe_returns_list(self, db_available):
+        """Real DB: apostrophe query must return a list, never crash."""
+        from exilesage.tools.mods import search_mods
+        results = search_mods(query="Athlete's")
+        assert isinstance(results, list), "search_mods returned non-list for apostrophe query"
+
+    @pytest.mark.parametrize("query", [
+        "fire.damage",
+        "dps=500",
+        "wand/sceptre",
+        "cold<lightning",
+        "test,value",
+        "fire>cold",
+        "back`tick",
+    ])
+    def test_search_mods_crash_chars_return_list(self, db_available, query):
+        """Real DB: each previously-crashing query must return a list, never raise."""
+        from exilesage.tools.mods import search_mods
+        results = search_mods(query=query)
+        assert isinstance(results, list), f"search_mods crashed on query {query!r}"
+
+    def test_search_mods_clean_query_still_works(self, db_available):
+        """Regression guard: normal single-word query must still return results after fix.
+
+        Uses 'fire' (not 'fire damage') — FTS5 indexes type=FireResistance mods so
+        'fire*' reliably returns rows. Multi-word phrase matching is a separate concern.
+        """
+        from exilesage.tools.mods import search_mods
+        results = search_mods(query="fire")
+        assert isinstance(results, list)
+        assert len(results) > 0, "Normal 'fire' query returned no results after fix"

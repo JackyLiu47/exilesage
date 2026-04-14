@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field, field_validator
 
 from exilesage.db import get_connection
 from exilesage.config import PROCESSED_DIR, MAX_RESULTS
+from pipeline.importers._base import _safe_replace_table
 
 log = logging.getLogger(__name__)
 
@@ -111,33 +112,23 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
             skipped += 1
             continue
 
-    # Insert all rows in one batch
-    if rows_to_insert:
-        with get_connection(db_path) as conn:
-            cursor = conn.cursor()
-            cursor.executemany(
-                """
-                INSERT OR REPLACE INTO mods (
+    # Atomic full-replace: DELETE + INSERT + FTS rebuild + meta count update
+    with get_connection(db_path) as conn:
+        _safe_replace_table(
+            conn,
+            table="mods",
+            insert_sql="""
+                INSERT INTO mods (
                     id, name, generation_type, domain, group_name, type,
                     required_level, is_essence_only, tags, spawn_weights,
                     generation_weights, grants_effects, stats, adds_tags,
                     implicit_tags
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                rows_to_insert,
-            )
-
-            # Rebuild FTS5 index
-            cursor.execute("INSERT INTO mods_fts(mods_fts) VALUES('rebuild')")
-
-            # Update meta table
-            cursor.execute(
-                "UPDATE meta SET mods_count=? WHERE id=1",
-                (imported,),
-            )
-
-            conn.commit()
-
+            """,
+            rows=rows_to_insert,
+            fts_table="mods_fts",
+            meta_col="mods_count",
+        )
     # Print summary
     print(f"Imported {imported} mods ({skipped} skipped)")
 

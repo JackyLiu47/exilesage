@@ -4,10 +4,11 @@ import re
 from pathlib import Path
 from typing import Optional
 
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field
 
 from exilesage.config import PROCESSED_DIR
 from exilesage.db import get_connection
+from pipeline.importers._base import _safe_replace_table
 
 logger = logging.getLogger(__name__)
 
@@ -86,36 +87,25 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
             )
             rows.append(row)
 
-        except ValidationError as e:
+        except Exception as e:
             logger.warning(
                 f"Validation error for augment {item_id}: {e}, skipping"
             )
             skipped += 1
 
     with get_connection(db_path) as conn:
-        cursor = conn.cursor()
-
-        # Insert all valid rows in a single executemany
-        if rows:
-            cursor.executemany(
-                """
-                INSERT OR REPLACE INTO augments
+        _safe_replace_table(
+            conn,
+            table="augments",
+            insert_sql="""
+                INSERT INTO augments
                 (id, type_id, type_name, required_level, limit_info, categories)
                 VALUES (?, ?, ?, ?, ?, ?)
-                """,
-                rows,
-            )
-
-        # Rebuild FTS5 index
-        cursor.execute("INSERT INTO augments_fts(augments_fts) VALUES('rebuild')")
-
-        # Update meta table
-        cursor.execute(
-            "UPDATE meta SET augments_count=? WHERE id=1",
-            (len(rows),),
+            """,
+            rows=rows,
+            fts_table="augments_fts",
+            meta_col="augments_count",
         )
-
-        conn.commit()
 
     imported = len(rows)
     print(f"Imported {imported} augments ({skipped} skipped)")

@@ -5,12 +5,14 @@ Loads base_items.json and populates the base_items table in SQLite.
 
 import json
 import logging
+import sys
 from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from exilesage.db import get_connection
 from exilesage.config import PROCESSED_DIR
+from pipeline.importers._base import _safe_replace_table
 
 log = logging.getLogger(__name__)
 
@@ -121,7 +123,6 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
 
     if not valid_rows:
         log.warning("No valid base_items to import")
-        return 0, skipped
 
     # Prepare data for database insert
     insert_data = []
@@ -155,28 +156,19 @@ def run(db_path: Optional[str] = None) -> tuple[int, int]:
         ))
 
     with get_connection(db_path) as conn:
-        cursor = conn.cursor()
-
-        cursor.executemany(
-            """INSERT OR REPLACE INTO base_items
+        _safe_replace_table(
+            conn,
+            table="base_items",
+            insert_sql="""INSERT INTO base_items
                (id, name, item_class, domain, drop_level, tags, implicits,
                 requirements, properties, armour, evasion, energy_shield,
                 physical_damage_min, physical_damage_max, critical_strike_chance,
                 attack_time, stack_size)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            insert_data
+            rows=insert_data,
+            fts_table="base_items_fts",
+            meta_col="base_items_count",
         )
-
-        # Rebuild FTS5 index
-        cursor.execute("INSERT INTO base_items_fts(base_items_fts) VALUES('rebuild')")
-
-        # Update meta table
-        cursor.execute(
-            "UPDATE meta SET base_items_count=?, last_import_at=CURRENT_TIMESTAMP WHERE id=1",
-            (len(valid_rows),)
-        )
-
-        conn.commit()
 
     log.info(f"Imported {len(valid_rows)} base_items ({skipped} skipped)")
     print(f"Imported {len(valid_rows)} base_items ({skipped} skipped)")
