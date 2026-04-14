@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import logging
+import time
 from pathlib import Path
 from typing import Any
 
@@ -40,6 +41,8 @@ def _get_client() -> anthropic.Anthropic:
         _client = anthropic.Anthropic()
     return _client
 
+from pathlib import Path
+
 from exilesage.config import (
     MODEL_MAP,
     ROUTER_MODEL,
@@ -48,11 +51,80 @@ from exilesage.config import (
     MAX_CLASSIFIER_TOKENS,
     QueryType,
 )
-from exilesage.advisor.system_prompt import SYSTEM_PROMPT, CLASSIFIER_SYSTEM
+from exilesage.advisor.system_prompt import SYSTEM_PROMPT, CLASSIFIER_SYSTEM, build_system_prompt
 from exilesage.advisor.tool_defs import TOOL_DEFINITIONS
 from exilesage.tools import TOOL_DISPATCH
 
 log = logging.getLogger(__name__)
+
+# S1: Memoize dynamic system prompt to avoid DB + manifest I/O on every ask().
+_PROMPT_CACHE: dict[str, tuple[float, str]] = {}
+_PROMPT_TTL = 300  # seconds
+
+
+def clear_prompt_cache() -> None:
+    """Clear the prompt cache (for tests)."""
+    _PROMPT_CACHE.clear()
+
+
+def _get_manifest_path() -> Path:
+    """Return path to the repoe manifest JSON (injectable for tests)."""
+    # Manifest lives next to raw data files; use config-relative path.
+    import exilesage.config as cfg
+    return Path(cfg.DB_PATH).parent / "raw" / "_manifest.json"
+
+
+def _build_dynamic_system_prompt() -> str:
+    """Assemble system prompt with provenance from meta table + manifest.
+
+    Memoized with _PROMPT_TTL-second TTL to avoid repeated DB I/O per ask() call
+    and to keep the Anthropic prompt cache block stable (same hash = cache hit).
+    """
+    now = time.monotonic()
+    cached = _PROMPT_CACHE.get("")
+    if cached and now - cached[0] < _PROMPT_TTL:
+        return cached[1]
+
+    import sqlite3
+    from exilesage.db import get_connection
+    from scraper.freshness import detect_staleness
+
+    patch_version = "unknown"
+    fetched_at = "unknown"
+
+    try:
+        conn = get_connection()
+        conn.row_factory = sqlite3.Row
+        row = conn.execute(
+            "SELECT patch_version, last_import_at FROM meta WHERE id = 1"
+        ).fetchone()
+        conn.close()
+        if row:
+            patch_version = row["patch_version"] or "unknown"
+            fetched_at = row["last_import_at"] or "unknown"
+    except Exception as exc:
+        log.warning("_build_dynamic_system_prompt: could not read meta: %s", exc)
+
+    stale = False
+    reasons: list[str] = []
+    try:
+        manifest_path = _get_manifest_path()
+        if manifest_path.exists():
+            result = detect_staleness(manifest_path, rss_fetcher=None, remote_checker=None)
+            stale = result["stale"]
+            reasons = result["reasons"]
+    except Exception as exc:
+        log.warning("_build_dynamic_system_prompt: staleness check failed: %s", exc)
+
+    prompt = build_system_prompt(
+        patch_version=patch_version,
+        fetched_at=fetched_at,
+        stale=stale,
+        staleness_reasons=reasons,
+    )
+    _PROMPT_CACHE[""] = (now, prompt)
+    return prompt
+
 
 # ── Query classification ──────────────────────────────────────────────────────
 
@@ -148,6 +220,7 @@ def ask(question: str, query_type: QueryType | None = None) -> str:
 
     client = _get_client()
     messages: list[dict] = [{"role": "user", "content": question}]
+    system_prompt = _build_dynamic_system_prompt()
 
     response = None
     for iteration in range(MAX_TOOL_ITER):
@@ -155,7 +228,7 @@ def ask(question: str, query_type: QueryType | None = None) -> str:
         response = client.messages.create(
             model=model,
             max_tokens=MAX_ADVISOR_TOKENS,
-            system=SYSTEM_PROMPT,
+            system=system_prompt,
             tools=TOOL_DEFINITIONS,
             tool_choice={"type": "auto"},
             messages=messages,

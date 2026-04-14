@@ -81,6 +81,33 @@ Remember: your value to the player comes from **accuracy grounded in tool data**
 """
 
 
+def build_system_prompt(
+    patch_version: str,
+    fetched_at: str,
+    stale: bool,
+    staleness_reasons: tuple | list = (),
+) -> str:
+    """Build the full system prompt with a data provenance section appended.
+
+    Args:
+        patch_version:      e.g. "4.4.0.6.6"
+        fetched_at:         ISO-8601 string of last data fetch.
+        stale:              Whether data is considered stale.
+        staleness_reasons:  List of reason codes (used when stale=True).
+
+    Returns:
+        Full system prompt string with provenance/staleness appended.
+    """
+    provenance = f"\n\n## Data provenance\n\nData reflects patch {patch_version}, fetched {fetched_at}."
+    if stale:
+        reasons_str = ", ".join(staleness_reasons) if staleness_reasons else "unknown"
+        provenance += (
+            f"\n\nWARNING: This data may be stale — reasons: {reasons_str}. "
+            "Verify time-sensitive answers against current patch notes."
+        )
+    return SYSTEM_PROMPT + provenance
+
+
 CLASSIFIER_SYSTEM = (
     "You are a query classifier for ExileSage, a Path of Exile 2 advisor. "
     "Classify the user's question into exactly one of these categories:\n"

@@ -8,6 +8,7 @@ Commands:
   exilesage update             Fetch fresh data, then ingest
 """
 
+import json
 import os
 import sys
 import logging
@@ -19,6 +20,7 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
+import httpx
 import typer
 from rich.console import Console
 from rich.panel import Panel
@@ -28,12 +30,52 @@ import time
 
 from exilesage.advisor.core import ask, classify_query
 from exilesage.config import QueryType
+from exilesage.db import get_connection
 from pipeline.ingest import run as ingest_run
 from pipeline.update import run as update_run
+from scraper.freshness import detect_staleness, fetch_latest_poe2_patch_date
+from scraper.repoe import REPOE_FILES
 
 # ── Setup ──────────────────────────────────────────────────────────────────────
 
 console = Console(legacy_windows=False)
+
+
+def _get_manifest_path_for_cli() -> Path:
+    """Return path to the repoe manifest JSON."""
+    import exilesage.config as cfg
+    return Path(cfg.DB_PATH).parent / "raw" / "_manifest.json"
+
+
+def _get_meta_for_cli() -> tuple[str]:
+    """Return (patch_version,) from meta table."""
+    try:
+        conn = get_connection()
+        conn.row_factory = __import__("sqlite3").Row
+        row = conn.execute("SELECT patch_version FROM meta WHERE id = 1").fetchone()
+        conn.close()
+        if row:
+            return (row["patch_version"] or "unknown",)
+    except Exception:
+        pass
+    return ("unknown",)
+
+
+def _remote_head_checker(file_key: str) -> str | None:
+    """Check remote ETag/Last-Modified via HTTP HEAD. Returns remote ETag or None."""
+    from scraper.repoe import BASE_URL, REPOE_FILES
+    filename = REPOE_FILES.get(file_key)
+    if not filename:
+        return None
+    url = f"{BASE_URL}/{filename}"
+    try:
+        with httpx.Client() as client:
+            resp = client.head(url, timeout=10, follow_redirects=True)
+            resp.raise_for_status()
+            return resp.headers.get("ETag") or resp.headers.get("Last-Modified")
+    except Exception as exc:
+        logging.getLogger(__name__).warning("_remote_head_checker: HEAD %s failed: %s", url, exc)
+        return None
 app = typer.Typer(
     name="exilesage",
     help="PoE2 AI advisor — ask questions about Path of Exile 2 crafting, builds, and mechanics.",
@@ -180,14 +222,33 @@ def update(
         "--diff",
         help="Compute and save a diff vs previous data",
     ),
+    check: bool = typer.Option(
+        False,
+        "--check",
+        help="Check if data is stale without fetching. Exits 0=fresh, 1=stale.",
+    ),
+    remote: bool = typer.Option(
+        False,
+        "--remote",
+        help="With --check: also perform HTTP HEAD requests to verify remote hashes.",
+    ),
 ) -> None:
     """
     Fetch fresh PoE2 data from RePoE, then ingest into database.
 
     By default, only crafting-related files are fetched. Use --all to fetch
     every RePoE file. Use --force to re-download even if cached. Use --diff
-    to see what changed vs the previous import.
+    to see what changed vs the previous import. Use --check to check staleness
+    without fetching (add --remote to also HEAD the remote files).
     """
+    if remote and not check:
+        typer.echo("--remote has no effect without --check", err=True)
+        raise typer.Exit(code=2)
+
+    if check:
+        _run_check(remote=remote)
+        return
+
     try:
         console.print("[blue]Updating PoE2 data...[/blue]")
 
@@ -208,6 +269,39 @@ def update(
     except Exception as e:
         console.print(f"[red]Error: {e}[/red]")
         raise typer.Exit(code=1)
+
+
+def _run_check(remote: bool = False) -> None:
+    """Run staleness check and print JSON summary. Raises typer.Exit(1) when stale."""
+    manifest_path = _get_manifest_path_for_cli()
+    (patch_version,) = _get_meta_for_cli()
+
+    remote_checker = _remote_head_checker if remote else None
+
+    if not manifest_path.exists():
+        output = {
+            "stale": True,
+            "reasons": ["no_manifest_data"],
+            "max_fetched_at": "",
+            "patch_version": patch_version,
+        }
+        print(json.dumps(output))
+        raise typer.Exit(code=2)
+
+    result = detect_staleness(
+        manifest_path,
+        rss_fetcher=fetch_latest_poe2_patch_date,
+        remote_checker=remote_checker,
+    )
+
+    output = {
+        "stale": result["stale"],
+        "reasons": result["reasons"],
+        "max_fetched_at": result["max_fetched_at"],
+        "patch_version": patch_version,
+    }
+    print(json.dumps(output))
+    raise typer.Exit(code=1 if result["stale"] else 0)
 
 
 # ── Entrypoint ─────────────────────────────────────────────────────────────────

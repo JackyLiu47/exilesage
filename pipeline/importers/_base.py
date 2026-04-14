@@ -114,10 +114,15 @@ def _safe_replace_table(
 
             # Meta bookkeeping.
             if meta_col is not None:
-                conn.execute(
+                cursor = conn.execute(
                     f'UPDATE meta SET "{meta_col}" = ? WHERE id = 1',
                     (len(rows),),
                 )
+                if cursor.rowcount == 0:
+                    log.warning(
+                        "meta_col %s update affected 0 rows — is the meta row present?",
+                        meta_col,
+                    )
 
             # --- FK integrity check INSIDE transaction ---------------------
             # Run before COMMIT so violations trigger rollback — data is never

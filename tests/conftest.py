@@ -35,3 +35,19 @@ def db_conn():
 @pytest.fixture(scope="session")
 def has_api_key():
     return bool(os.environ.get("ANTHROPIC_API_KEY", "").startswith("sk-ant"))
+
+
+# S5: Clear module-level caches between tests to prevent contamination.
+@pytest.fixture(autouse=True)
+def _clear_module_caches():
+    """S5: Clear module-level caches before each test."""
+    from scraper.repoe import _patch_version_cache
+    _patch_version_cache.clear()
+    from exilesage.advisor import core as _core
+    if hasattr(_core, "_PROMPT_CACHE"):
+        _core._PROMPT_CACHE.clear()
+    yield
+    # Clear again after test for hygiene
+    _patch_version_cache.clear()
+    if hasattr(_core, "_PROMPT_CACHE"):
+        _core._PROMPT_CACHE.clear()

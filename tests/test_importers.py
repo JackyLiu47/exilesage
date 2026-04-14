@@ -1242,3 +1242,43 @@ class TestCoverageGaps:
             f"mods_fts count ({fts_count}) does not match imported ({imported})"
         )
         assert imported <= 3, "Should not import more rows than the valid 3"
+
+
+# ---------------------------------------------------------------------------
+# TestMetaColWarning — carryover from Phase 0 final review
+# ---------------------------------------------------------------------------
+
+class TestMetaColWarning:
+    """_safe_replace_table logs warning when meta_col update affects 0 rows (missing meta row)."""
+
+    @pytest.fixture()
+    def db_no_meta_row(self, tmp_path):
+        """DB with meta table but NO rows inserted."""
+        db_file = tmp_path / "no_meta.db"
+        conn = sqlite3.connect(str(db_file))
+        conn.executescript("""
+            CREATE TABLE IF NOT EXISTS items (
+                id TEXT PRIMARY KEY,
+                value TEXT
+            );
+            CREATE TABLE IF NOT EXISTS meta (
+                id INTEGER PRIMARY KEY CHECK(id=1),
+                item_count INTEGER DEFAULT 0
+            );
+            -- Intentionally NO INSERT into meta
+        """)
+        conn.commit()
+        yield conn
+        conn.close()
+
+    def test_meta_col_warning_when_no_meta_row(self, db_no_meta_row, caplog):
+        """_safe_replace_table logs a WARNING when meta UPDATE affects 0 rows."""
+        import logging
+        insert_sql = "INSERT INTO items (id, value) VALUES (?, ?)"
+        rows = [("a", "alpha")]
+        with caplog.at_level(logging.WARNING, logger="pipeline.importers._base"):
+            _safe_replace_table(db_no_meta_row, "items", insert_sql, rows, meta_col="item_count")
+        # Warning must mention meta_col or the 0-rows condition
+        warning_messages = [r.message for r in caplog.records if r.levelno >= logging.WARNING]
+        assert any("meta" in m.lower() or "0" in m for m in warning_messages), \
+            f"Expected meta_col warning, got: {warning_messages}"

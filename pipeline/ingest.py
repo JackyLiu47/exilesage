@@ -36,9 +36,16 @@ from pipeline.importers import (
     currencies_importer,
     augments_importer,
 )
+from scraper.repoe import fetch_patch_version
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 log = logging.getLogger(__name__)
+
+
+def _get_manifest_path():
+    """Return path to the repoe manifest JSON (injectable for tests)."""
+    from pathlib import Path
+    return Path(config.DB_PATH).parent / "raw" / "_manifest.json"
 
 # ---------------------------------------------------------------------------
 # Phase registry
@@ -139,9 +146,35 @@ def run() -> None:
 
     total_imported, total_skipped = run_phases(IMPORT_PHASES)
 
-    # Stamp import time only on clean run (all phases succeeded)
+    # Stamp import time + patch_version only on clean run (all phases succeeded)
+    patch_version = fetch_patch_version("mods")
+
+    # S6: If GitHub API is unreachable and patch_version is unknown, use http_last_modified
+    # from the manifest as a pseudo-version string ("lm:YYYY-MM-DD").
+    if patch_version is None:
+        try:
+            import json
+            from pathlib import Path
+            manifest_path = _get_manifest_path()
+            if manifest_path.exists():
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                lm = manifest.get("mods", {}).get("http_last_modified")
+                if lm:
+                    # Extract date portion: "Fri, 28 Feb 2026 13:55:43 GMT" → "2026-02-28"
+                    from email.utils import parsedate_to_datetime
+                    dt = parsedate_to_datetime(lm)
+                    patch_version = f"lm:{dt.strftime('%Y-%m-%d')}"
+        except Exception as exc:
+            log.warning("ingest: LM fallback failed: %s", exc)
+
     with get_connection() as conn:
-        conn.execute("UPDATE meta SET last_import_at = datetime('now') WHERE id = 1")
+        if patch_version is not None:
+            conn.execute(
+                "UPDATE meta SET patch_version = ?, last_import_at = datetime('now') WHERE id = 1",
+                (patch_version,),
+            )
+        else:
+            conn.execute("UPDATE meta SET last_import_at = datetime('now') WHERE id = 1")
 
     print(f"\nIngest complete — {total_imported:,} rows imported, {total_skipped} skipped.")
 

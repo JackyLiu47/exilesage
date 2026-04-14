@@ -160,3 +160,103 @@ def test_tool_dispatch_no_extras():
         assert name in def_names, (
             f"Tool '{name}' in TOOL_DISPATCH but missing from TOOL_DEFINITIONS"
         )
+
+
+# ── S1: Dynamic prompt cache ─────────────────────────────────────────────────
+
+class TestDynamicPromptCache:
+    """S1: _build_dynamic_system_prompt is memoized with a TTL."""
+
+    def test_prompt_cache_hit_avoids_db_read(self, tmp_path):
+        """Two calls within TTL → only one DB connection opened."""
+        import time
+        import sqlite3 as _sqlite3
+
+        db_file = tmp_path / "cache_test.db"
+        conn = _sqlite3.connect(str(db_file))
+        conn.executescript("""
+            CREATE TABLE IF NOT EXISTS meta (
+                id INTEGER PRIMARY KEY CHECK(id=1),
+                patch_version TEXT DEFAULT 'unknown',
+                last_import_at TEXT
+            );
+            INSERT OR IGNORE INTO meta (id, patch_version, last_import_at)
+            VALUES (1, 'test_ver', '2026-04-13T00:00:00');
+        """)
+        conn.commit()
+        conn.close()
+
+        import exilesage.config as cfg
+        original_db = cfg.DB_PATH
+        cfg.DB_PATH = str(db_file)
+
+        from exilesage.advisor import core
+        core.clear_prompt_cache()
+
+        call_count = 0
+        real_connect = _sqlite3.connect
+
+        def counting_connect(path, **kwargs):
+            nonlocal call_count
+            call_count += 1
+            return real_connect(path, **kwargs)
+
+        try:
+            with patch("exilesage.advisor.core._get_manifest_path",
+                       return_value=tmp_path / "missing_manifest.json"):
+                with patch("sqlite3.connect", side_effect=counting_connect):
+                    core._build_dynamic_system_prompt()
+                    core._build_dynamic_system_prompt()
+        finally:
+            cfg.DB_PATH = original_db
+            core.clear_prompt_cache()
+
+        assert call_count == 1, f"Expected 1 DB call, got {call_count} (cache miss on second call)"
+
+    def test_prompt_cache_miss_after_ttl(self, tmp_path, monkeypatch):
+        """After TTL expires, a second call opens DB again."""
+        import time
+        import sqlite3 as _sqlite3
+
+        db_file = tmp_path / "ttl_test.db"
+        conn = _sqlite3.connect(str(db_file))
+        conn.executescript("""
+            CREATE TABLE IF NOT EXISTS meta (
+                id INTEGER PRIMARY KEY CHECK(id=1),
+                patch_version TEXT DEFAULT 'unknown',
+                last_import_at TEXT
+            );
+            INSERT OR IGNORE INTO meta (id, patch_version, last_import_at)
+            VALUES (1, 'test_ver', '2026-04-13T00:00:00');
+        """)
+        conn.commit()
+        conn.close()
+
+        import exilesage.config as cfg
+        original_db = cfg.DB_PATH
+        cfg.DB_PATH = str(db_file)
+
+        from exilesage.advisor import core
+        core.clear_prompt_cache()
+        monkeypatch.setattr(core, "_PROMPT_TTL", 0.01)
+
+        call_count = 0
+        real_connect = _sqlite3.connect
+
+        def counting_connect(path, **kwargs):
+            nonlocal call_count
+            call_count += 1
+            return real_connect(path, **kwargs)
+
+        try:
+            with patch("exilesage.advisor.core._get_manifest_path",
+                       return_value=tmp_path / "missing_manifest.json"):
+                with patch("sqlite3.connect", side_effect=counting_connect):
+                    core._build_dynamic_system_prompt()
+                    time.sleep(0.05)
+                    core._build_dynamic_system_prompt()
+        finally:
+            cfg.DB_PATH = original_db
+            core.clear_prompt_cache()
+
+        assert call_count == 2, f"Expected 2 DB calls after TTL, got {call_count}"
