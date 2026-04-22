@@ -1,5 +1,7 @@
 # Environment
 .env
+*.env
+!.env.example
 
 # Database
 data/exilesage.db

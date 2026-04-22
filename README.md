@@ -4,9 +4,9 @@ A Path of Exile 2 AI advisor. Ask it anything — crafting, items, currencies, b
 
 ---
 
-## What Stage 1 built
+## What's in place
 
-Stage 1 is a working local advisor: a structured game data pipeline feeding a tool-use AI that answers PoE2 questions grounded in actual mod, item, and currency data.
+ExileSage is a working local advisor: a structured game data pipeline feeding a tool-use AI that answers PoE2 questions grounded in actual mod, item, and currency data. Stage 1 shipped the core advisor. Stage 2 has since added reliability hardening (atomic data refreshes, Unicode-safe search, interrupt safety) and **freshness tracking** — the advisor now knows when its data is out of date and tells you.
 
 ### The pipeline
 
@@ -133,6 +133,23 @@ exilesage ingest    # re-ingest existing processed files only
 
 ---
 
+## Freshness
+
+The advisor's game data comes from a community-maintained export that lags behind live patches. As of Stage 2, ExileSage detects this lag and surfaces it:
+
+- Every answer's context includes the patch version its data reflects.
+- If the advisor is running on data older than 7 days, or Grinding Gear Games' own patch-notes feed shows a newer release, a staleness warning is automatically injected into the advisor's reasoning.
+- The CLI exposes a check command:
+
+```bash
+exilesage update --check             # exit 0 fresh, 1 stale, 2 error
+exilesage update --check --remote    # also checks the remote source
+```
+
+Output is machine-readable JSON on stdout, so it scripts cleanly into a pre-query routine.
+
+---
+
 ## Architecture
 
 ```
@@ -186,10 +203,13 @@ data/
 
 ---
 
-## What Stage 2 will add
+## What's next
 
-- PoE2 wiki scraper — passive tree, ascendancies, skills, keystones
-- Community guide ingestion — maxroll, poe2db indexed with embeddings
-- RAG layer — semantic search over unstructured guide content
-- Freshness tracking — patch version detection, stale content flagging
-- Innovative build synthesis — gap analysis between synergy graph and known builds
+Stage 2 is in progress. Completed so far: reliability hardening (2 passes) and freshness tracking. Remaining work:
+
+- **Skills, gems, and ascendancies** — so the advisor can answer "what does Fireball do at level 40?" and "what ascendancies does Sorceress have?"
+- **Uniques** — name + item class are already indexed; full stat data depends on sourcing from a second data source
+- **Community guide ingestion and RAG** — deferred to Stage 3
+- **Passive tree and build synthesis** — Stage 3
+
+See `CHANGELOG.md` for shipped milestones in product-facing terms.
